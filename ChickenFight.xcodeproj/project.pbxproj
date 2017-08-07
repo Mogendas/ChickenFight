@@ -13,6 +13,8 @@
 		4C646BA61F3853990095E71D /* ChickenFight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C646BA41F3853990095E71D /* ChickenFight.xcdatamodeld */; };
 		4C646BA81F3853990095E71D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C646BA71F3853990095E71D /* Assets.xcassets */; };
 		4C646BAB1F3853990095E71D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C646BA91F3853990095E71D /* LaunchScreen.storyboard */; };
+		4C646BB31F3866490095E71D /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646BB21F3866490095E71D /* Challenge.swift */; };
+		4C646BB51F387B1D0095E71D /* Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646BB41F387B1D0095E71D /* Moves.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		4C646BA71F3853990095E71D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C646BAA1F3853990095E71D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C646BAC1F3853990095E71D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C646BB21F3866490095E71D /* Challenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		4C646BB41F387B1D0095E71D /* Moves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moves.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				4C646B9D1F3853990095E71D /* AppDelegate.swift */,
+				4C646BB21F3866490095E71D /* Challenge.swift */,
+				4C646BB41F387B1D0095E71D /* Moves.swift */,
 				4C646B9F1F3853990095E71D /* ViewController.swift */,
 				4C646BA11F3853990095E71D /* Main.storyboard */,
 				4C646BA71F3853990095E71D /* Assets.xcassets */,
@@ -141,7 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C646BA61F3853990095E71D /* ChickenFight.xcdatamodeld in Sources */,
+				4C646BB31F3866490095E71D /* Challenge.swift in Sources */,
 				4C646BA01F3853990095E71D /* ViewController.swift in Sources */,
+				4C646BB51F387B1D0095E71D /* Moves.swift in Sources */,
 				4C646B9E1F3853990095E71D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
