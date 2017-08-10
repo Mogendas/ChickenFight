@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var btnNewChallenge: UIButton!
     
     let list: [String] = ["One", "Two", "three"]
     let sectionTitleArray: [String] = ["Challanges", "Waiting", "Done"]
@@ -28,6 +29,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        btnNewChallenge.imageView?.contentMode = .scaleAspectFit
         // Do any additional setup after loading the view, typically from a nib.
     }
 

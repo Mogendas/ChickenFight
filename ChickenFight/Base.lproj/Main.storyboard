@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,12 +42,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jK6-Ml-kmn">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChickenHead" translatesAutoresizingMaskIntoConstraints="NO" id="Eh0-fh-YiQ">
-                                        <rect key="frame" x="199" y="20" width="160" height="160"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Eh0-fh-YiQ" secondAttribute="height" multiplier="1:1" id="xVV-2z-0ah"/>
-                                        </constraints>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wins:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gid-Cl-hjP">
                                         <rect key="frame" x="8" y="149" width="73" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -77,17 +70,19 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="54z-dU-gQK">
-                                        <rect key="frame" x="8" y="16" width="173" height="94"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="NewlogoGray" translatesAutoresizingMaskIntoConstraints="NO" id="54z-dU-gQK">
+                                        <rect key="frame" x="8" y="19" width="359" height="61"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AeD-hi-HqB">
+                                        <rect key="frame" x="209" y="96" width="158" height="81"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Newchallenge">
+                                            <attributedString key="attributedTitle"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.26598547700000003" green="0.64720392339999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Eh0-fh-YiQ" firstAttribute="centerY" secondItem="jK6-Ml-kmn" secondAttribute="centerY" id="PDM-Mf-Uww"/>
-                                    <constraint firstItem="Eh0-fh-YiQ" firstAttribute="height" secondItem="jK6-Ml-kmn" secondAttribute="height" multiplier="0.8" id="PKH-Ay-rwg"/>
-                                    <constraint firstAttribute="trailing" secondItem="Eh0-fh-YiQ" secondAttribute="trailing" constant="16" id="Z6m-gP-mly"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -103,6 +98,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnNewChallenge" destination="AeD-hi-HqB" id="Acr-p1-sV2"/>
                         <outlet property="tableView" destination="IIK-3Y-ZQc" id="9CB-t8-HUz"/>
                     </connections>
                 </viewController>
@@ -112,7 +108,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ChickenHead" width="109" height="129"/>
-        <image name="Logo" width="667" height="499"/>
+        <image name="Newchallenge" width="1050" height="400"/>
+        <image name="NewlogoGray" width="1280" height="220"/>
     </resources>
 </document>
