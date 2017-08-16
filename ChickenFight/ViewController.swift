@@ -31,6 +31,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         btnNewChallenge.imageView?.contentMode = .scaleAspectFit
+        
+        let dbConnector = DatabaseConnector()
+        let numbers = "461234567,467654321"
+        dbConnector.checkPhonenumbers(numbersToCheck: numbers)
+        print("\(dbConnector.formatNumber(number: "073423525432"))")
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
