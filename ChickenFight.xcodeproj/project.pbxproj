@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C16B06B1F41C84400D2F2C5 /* DatabaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16B06A1F41C84400D2F2C5 /* DatabaseConnector.swift */; };
 		4C3DAA4F1F4474660071CAAF /* ApiConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3DAA4E1F4474660071CAAF /* ApiConnector.swift */; };
+		4C3DAA521F48DA200071CAAF /* GameContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3DAA511F48DA200071CAAF /* GameContact.swift */; };
 		4C646B9E1F3853990095E71D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646B9D1F3853990095E71D /* AppDelegate.swift */; };
 		4C646BA01F3853990095E71D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646B9F1F3853990095E71D /* ViewController.swift */; };
 		4C646BA31F3853990095E71D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C646BA11F3853990095E71D /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		4C16B06A1F41C84400D2F2C5 /* DatabaseConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseConnector.swift; sourceTree = "<group>"; };
 		4C3DAA4E1F4474660071CAAF /* ApiConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiConnector.swift; sourceTree = "<group>"; };
+		4C3DAA511F48DA200071CAAF /* GameContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContact.swift; sourceTree = "<group>"; };
 		4C646B9A1F3853990095E71D /* ChickenFight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChickenFight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C646B9D1F3853990095E71D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C646B9F1F3853990095E71D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +47,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C3DAA501F48D9FE0071CAAF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4C646BB21F3866490095E71D /* Challenge.swift */,
+				4C646BB41F387B1D0095E71D /* Moves.swift */,
+				4C3DAA511F48DA200071CAAF /* GameContact.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		4C646B911F3853990095E71D = {
 			isa = PBXGroup;
 			children = (
@@ -64,9 +76,8 @@
 		4C646B9C1F3853990095E71D /* ChickenFight */ = {
 			isa = PBXGroup;
 			children = (
+				4C3DAA501F48D9FE0071CAAF /* Model */,
 				4C646B9D1F3853990095E71D /* AppDelegate.swift */,
-				4C646BB21F3866490095E71D /* Challenge.swift */,
-				4C646BB41F387B1D0095E71D /* Moves.swift */,
 				4C16B06A1F41C84400D2F2C5 /* DatabaseConnector.swift */,
 				4C3DAA4E1F4474660071CAAF /* ApiConnector.swift */,
 				4C646B9F1F3853990095E71D /* ViewController.swift */,
@@ -154,6 +165,7 @@
 			files = (
 				4C646BA61F3853990095E71D /* ChickenFight.xcdatamodeld in Sources */,
 				4C646BB31F3866490095E71D /* Challenge.swift in Sources */,
+				4C3DAA521F48DA200071CAAF /* GameContact.swift in Sources */,
 				4C646BA01F3853990095E71D /* ViewController.swift in Sources */,
 				4C646BB51F387B1D0095E71D /* Moves.swift in Sources */,
 				4C3DAA4F1F4474660071CAAF /* ApiConnector.swift in Sources */,

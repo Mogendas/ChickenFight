@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Contacts
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -14,6 +15,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let list: [String] = ["One", "Two", "three"]
     let sectionTitleArray: [String] = ["Challanges", "Waiting", "Done"]
+    
+    var contacts = [GameContact]()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -37,12 +40,50 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         dbConnector.checkPhonenumbers(numbersToCheck: numbers)
         print("\(dbConnector.formatNumber(number: "073423525432"))")
         
+        updateContactsArray()
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func updateContactsArray(){
+        let store = CNContactStore()
+        store.requestAccess(for: .contacts) { (isGranted, error) in
+            let keys = [CNContactPhoneNumbersKey, CNContactFamilyNameKey, CNContactGivenNameKey]
+            let request1 = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+            
+            try? store.enumerateContacts(with: request1, usingBlock: { (contact, error) in
+//                print("Name: \(contact.givenName), \(contact.familyName), Phone: ")
+//                self.contacts.append(contact)
+                
+                let name = "\(contact.givenName) \(contact.familyName)"
+                var phoneNumbers = [String]()
+                
+                for phoneNumber in contact.phoneNumbers {
+                    // Whatever you want to do with it
+//                    if let number = phoneNumber.value as? CNPhoneNumber {
+//                        print(phoneNumber.value.stringValue)
+//                    }
+//                    print("Phonenumber:\(phone)")
+                    phoneNumbers.append(phoneNumber.value.stringValue)
+                    
+                }
+                
+                let newContact = GameContact(name: name, phoneNumbers: phoneNumbers)
+                self.contacts.append(newContact)
+                
+            })
+//            print("Contacts: \(self.contacts)")
+            for gc in self.contacts {
+                print("Name: \(gc.name), First number: \(gc.phoneNumbers[0])")
+            }
+        }
+//        print("Contacts: \(self.contacts)")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

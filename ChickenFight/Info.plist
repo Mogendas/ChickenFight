@@ -34,5 +34,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>In order to challenge your friends we need acces to your contacts</string>
 </dict>
 </plist>
