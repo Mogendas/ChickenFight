@@ -9,7 +9,8 @@
 import Foundation
 
 protocol GetDataFromDBProtocal: class {
-    func phonenumbersChecked(locations: [String])
+    func phonenumbersChecked(numbers: [String])
+    func updateChallengeList(challengeList: [Challenge])
 }
 
 class DatabaseConnector: NSObject, URLSessionDelegate {
@@ -18,38 +19,14 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     
     let urlPath = "https://wejdenma16.000webhostapp.com/chickenfight/chickenfight.php"
     
-    func formatNumber(number: String) -> String {
-        
-        var formattedNumber = String(number.characters.filter({ "0123456789".characters.contains($0) }))
-        var index = formattedNumber.index(formattedNumber.startIndex, offsetBy: 2)
-        var startOfString = formattedNumber.substring(to: index)
-//        var start = getFirst(number: formattedNumber, offset: 2)
-        if startOfString == "00"{
-            formattedNumber = formattedNumber.substring(from: index)
-        }
-        
-        index = formattedNumber.index(formattedNumber.startIndex, offsetBy: 1)
-        
-//        print(range)
-        startOfString = formattedNumber.substring(to: index)
-        
-        if startOfString == "0"{
-            formattedNumber = formattedNumber.substring(from: index)
-            formattedNumber = "46" + formattedNumber
-        }
-        return formattedNumber
+    func loadPhonenumber() -> String {
+        // Load locally stored phonenumber
+        return "46704672965"
     }
-    
-//    func getFirst(number: String, offset: Int) -> String {
-//        let index = number.index(number.startIndex, offsetBy: offset)
-//        let startOfString = number.substring(to: index)
-//        
-//        return startOfString
-//    }
     
     func checkPhonenumbers(numbersToCheck: String){
         let url: URL = URL(string: urlPath)!
-        let phonenumber = "46704672965"
+        let phonenumber = loadPhonenumber()
 //        let searchnumbers = "46704672965,461234567"
 //        let searchnumbers = numbersToCheck
 
@@ -95,7 +72,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             try jsonResult = JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! [[String: Any]]
             
         } catch let error as NSError {
-            print("ERROR:")
+//            print("ERROR:")
             print("Error: \(error)")
         }
         
@@ -114,9 +91,186 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
 //        for i in (0...jsonResult.count - 1) {
 //            jsonElement = jsonResult[i] as! [String: Any]
 //        }
-        
-        print("\(phoneNumbers)")
+        DispatchQueue.main.async {
+            self.delegate.phonenumbersChecked(numbers: phoneNumbers)
+        }
+//        print("\(phoneNumbers)")
         
 //            print(numbers)
     }
+    
+    func getChallenges(){
+        let url: URL = URL(string: urlPath)!
+        let phonenumber = loadPhonenumber()
+        let request = NSMutableURLRequest(url: url)
+        
+        request.httpMethod = "POST"
+        var postParameters = "action=getchallenges"
+        postParameters += "&phonenumber=" + phonenumber
+        
+        request.httpBody = postParameters.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, responce, error in
+            
+            if error != nil{
+                print("error is \(String(describing: error))")
+                return;
+            }
+            
+            if data != nil {
+//                                print("Data:")
+//                                let dataString = String(describing: NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
+                //                print("\(dataString)")
+                self.parseChallengesJSON(data!)
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    func parseChallengesJSON(_ data: Data){
+        var jsonResult: [[String: Any]] = [[String: Any]]()
+        
+        do {
+            
+            try jsonResult = JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! [[String: Any]]
+            
+        } catch let error as NSError {
+            //            print("ERROR:")
+            print("Error: \(error)")
+        }
+        var challengesList = [Challenge]()
+        for game in jsonResult {
+            if let gameID = game["game_id"] as? String, let attacker = game["attacker"] as? String, let defender = game["defender"] as? String {
+                
+                let challenge = Challenge()
+                challenge.challengeID = Int(gameID)!
+                challenge.attacker = attacker
+//                challenge.attackerMoves = Moves(moves: attackerMoves)
+                challenge.defender = defender
+                
+                if let attackMoves = game["attacker_moves"] as? String{
+                    print("Attack: \(attackMoves)")
+                    if attackMoves != "" {
+                        challenge.attackerMoves = Moves(moves: attackMoves)
+                    }
+                }
+                
+                if let defMoves = game["defender_moves"] as? String{
+                    print("Defence: \(defMoves)")
+                    if defMoves != ""{
+                        challenge.defenderMoves = Moves(moves: defMoves)
+                    }
+                }
+                
+                challengesList.append(challenge)
+                
+//                print("Game: \(gameID), \(attacker), \(attackerMoves), \(defender), \(defenderMoves)")
+            }
+        }
+        DispatchQueue.main.async {
+            self.delegate.updateChallengeList(challengeList: challengesList)
+        }
+    }
+    
+    func newChallenge(challenge: Challenge){
+        
+//        if challenge.getMyMovesAsString() != ""{
+            let url: URL = URL(string: urlPath)!
+            let phonenumber = loadPhonenumber()
+            let request = NSMutableURLRequest(url: url)
+            let moves = challenge.attackerMoves?.getMovesAsString()
+            let opponent = challenge.defender
+            
+//            print("Opponent: \(String(describing: opponent)), moves: \(moves)")
+            
+            request.httpMethod = "POST"
+            var postParameters = "action=newchallenge"
+            postParameters += "&phonenumber=" + phonenumber
+            postParameters += "&moves=" + moves!
+            postParameters += "&opponent=" + opponent!
+            
+            request.httpBody = postParameters.data(using: .utf8)
+            
+            let task = URLSession.shared.dataTask(with: request as URLRequest){
+                data, responce, error in
+                
+                if error != nil{
+                    print("error is \(String(describing: error))")
+                    return;
+                }
+                
+                if data != nil {
+                    // Check for success
+                    self.getChallenges()
+                }
+            }
+            task.resume()
+//        }
+    }
+    
+    func updateChallenge(moves: Moves, challengeid: Int){
+        let url: URL = URL(string: urlPath)!
+        let phonenumber = loadPhonenumber()
+        let request = NSMutableURLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        var postParameters = "action=updatechallenge"
+        postParameters += "&phonenumber=" + phonenumber
+        postParameters += "&moves=" + moves.getMovesAsString()
+        postParameters += "&gameid=" + "\(challengeid)"
+        
+        request.httpBody = postParameters.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, responce, error in
+            
+            if error != nil{
+                print("error is \(String(describing: error))")
+                return;
+            }
+            
+            if data != nil {
+                // Check for success
+                self.getChallenges()
+            }
+            
+        }
+        task.resume()
+
+    }
+    
+    func setWatched(challengeid: Int){
+        let url: URL = URL(string: urlPath)!
+        let phonenumber = loadPhonenumber()
+        let request = NSMutableURLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        var postParameters = "action=watched"
+        postParameters += "&phonenumber=" + phonenumber
+        postParameters += "&gameid=" + "\(challengeid)"
+        
+        request.httpBody = postParameters.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, responce, error in
+            
+            if error != nil{
+                print("error is \(String(describing: error))")
+                return;
+            }
+            
+            if data != nil {
+                // Check for success
+//                self.getChallenges()
+            }
+            
+        }
+        task.resume()
+    }
+    
 }

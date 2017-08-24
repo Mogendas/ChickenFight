@@ -24,6 +24,11 @@ class Moves {
         self.defence2 = Int(moves[4])!
         self.defence3 = Int(moves[5])!
     }
+    
+    func getMovesAsString()-> String{
+        let moves = "\(attack1)\(attack2)\(attack3)\(defence1)\(defence2)\(defence3)"
+        return moves
+    }
 }
 
 extension String {
