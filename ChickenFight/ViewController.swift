@@ -8,8 +8,9 @@
 
 import UIKit
 import Contacts
+import Messages
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GetDataFromDBProtocal {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GetDataFromDBProtocal, ApiConnectorProtocol {
     
     @IBOutlet weak var btnNewChallenge: UIButton!
     
@@ -19,14 +20,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var doneList = [Challenge]()
     let sectionTitleArray: [String] = ["Challanges", "Waiting", "Done"]
     let dbConnector = DatabaseConnector()
+    let apiConnector = ApiConnector()
     var contacts = [GameContact]()
     var friendsList = [GameContact]()
+    var verificationCode: String?
     
     @IBOutlet weak var challengesTableView: UITableView!
     
     @IBOutlet weak var contactsTableView: UITableView!
 
     @IBOutlet weak var contactView: UIView!
+    @IBOutlet weak var newChallengeView: UIView!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         let mask = UIInterfaceOrientationMask.portrait
@@ -46,12 +50,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        contactsTableView.tableHeaderView = nil
         btnNewChallenge.imageView?.contentMode = .scaleAspectFit
         dbConnector.delegate = self
+        apiConnector.delegate = self
         contactView.layer.cornerRadius = 20
 //        let numbers = "467654321,461234567,"
 //        dbConnector.checkPhonenumbers(numbersToCheck: numbers)
 //        print("\(formatNumber(number: "073423525432"))")
         
         updateContactsArray()
+//        dbConnector.newUser(phonenumber: "4493939393")
+//        let random = randomNumber()
+//        print("Random: \(random)")
 //        dbConnector.getChallenges()
         
         
@@ -72,6 +80,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        let gameid = 10
 //        dbConnector.setWatched(challengeid: gameid)
         // End test wathed
+        
+        // Test sms
+//        sendSmsVerification(phonenumber: "46702666888")
+        //End test sms
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +178,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         challengesTableView.reloadData()
     }
     
+    func sendSmsVerification(phonenumber: String){
+        verificationCode = randomNumber()
+//        print("Code: \(verificationCode)")
+        apiConnector.verifyPhonenumber(phonenumber: phonenumber, vericationCode: verificationCode!)
+    }
+    
+    func smsVerificationSent(){
+        // Verify code and save phonenumber in database
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows: Int = 0
         if tableView == challengesTableView {
@@ -254,7 +276,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }else{
             return nil
         }
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -289,6 +310,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             formattedNumber = "46" + formattedNumber
         }
         return formattedNumber
+    }
+    
+    func randomNumber()-> String{
+        let randomInt = Int(arc4random_uniform(UInt32(9999)) + UInt32(1000))
+        let randomString:String = String(randomInt)
+        return randomString
     }
     
 }

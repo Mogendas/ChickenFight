@@ -18,10 +18,36 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     weak var delegate: GetDataFromDBProtocal!
     
     let urlPath = "https://wejdenma16.000webhostapp.com/chickenfight/chickenfight.php"
+    let newUserUrlPath = "https://wejdenma16.000webhostapp.com/chickenfight/newuser.php"
     
     func loadPhonenumber() -> String {
         // Load locally stored phonenumber
         return "46704672965"
+    }
+    
+    func newUser(phonenumber: String) {
+        let url: URL = URL(string: newUserUrlPath)!
+//        let phonenumber = loadPhonenumber()
+        let request = NSMutableURLRequest(url: url)
+        
+        request.httpMethod = "POST"
+        let postParameters = "phonenumber=" + phonenumber
+        
+        request.httpBody = postParameters.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, responce, error in
+            
+            if error != nil{
+                print("error is \(String(describing: error))")
+                return;
+            }
+            
+            if data != nil {
+                // Check if user created
+            }
+        }
+        task.resume()
     }
     
     func checkPhonenumbers(numbersToCheck: String){
@@ -59,7 +85,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             
         }
         task.resume()
-        
     }
     
     func parsePhonenumbersJSON(_ data: Data){
@@ -127,7 +152,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             
         }
         task.resume()
-        
     }
     
     func parseChallengesJSON(_ data: Data){
@@ -152,14 +176,14 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                 challenge.defender = defender
                 
                 if let attackMoves = game["attacker_moves"] as? String{
-                    print("Attack: \(attackMoves)")
+//                    print("Attack: \(attackMoves)")
                     if attackMoves != "" {
                         challenge.attackerMoves = Moves(moves: attackMoves)
                     }
                 }
                 
                 if let defMoves = game["defender_moves"] as? String{
-                    print("Defence: \(defMoves)")
+//                    print("Defence: \(defMoves)")
                     if defMoves != ""{
                         challenge.defenderMoves = Moves(moves: defMoves)
                     }
