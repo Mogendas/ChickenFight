@@ -9,14 +9,14 @@
 import Foundation
 
 protocol ApiConnectorProtocol: class {
-    func smsVerificationSent()
+    func smsVerificationSent(phonenumber: String, verificatoinCode: String)
 }
 
 class ApiConnector {
     
     weak var delegate: ApiConnectorProtocol!
     
-    let url = "https://www.textmagic.com/app/api?username=johanwejdenstolpe&password=x45Y21C4Fx&cmd=send&text=test+message&phone=46704672965&unicode=0"
+//    let url = "https://www.textmagic.com/app/api?username=johanwejdenstolpe&password=x45Y21C4Fx&cmd=send&text=test+message&phone=46704672965&unicode=0"
     
     func verifyPhonenumber(phonenumber: String, vericationCode: String){
  
@@ -46,6 +46,11 @@ class ApiConnector {
                 
                 switch httpResponse.statusCode {
                     
+                case 200:
+                    DispatchQueue.main.async {
+                        self.delegate.smsVerificationSent(phonenumber: phonenumber, verificatoinCode: vericationCode)
+                    }
+                    break
                 case 400:
 //                    self.delegate?.downloadError(error: "Dålig förfrågan")
                     break

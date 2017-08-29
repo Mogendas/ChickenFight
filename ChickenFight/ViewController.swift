@@ -18,12 +18,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var challengesList = [Challenge]()
     var waitingList = [Challenge]()
     var doneList = [Challenge]()
+    var useChallenge: Challenge?
+    
+    var refreshControl = UIRefreshControl()
     let sectionTitleArray: [String] = ["Challanges", "Waiting", "Done"]
     let dbConnector = DatabaseConnector()
     let apiConnector = ApiConnector()
     var contacts = [GameContact]()
     var friendsList = [GameContact]()
-    var verificationCode: String?
+//    var verificationCode: String?
     
     @IBOutlet weak var challengesTableView: UITableView!
     
@@ -31,6 +34,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var contactView: UIView!
     @IBOutlet weak var newChallengeView: UIView!
+    
+    @IBOutlet weak var numberOfGAmesPlayed: UILabel!
+    @IBOutlet weak var numberOfGamesWon: UILabel!
+    @IBOutlet weak var btnChallengeOutlet: UIButton!
+    
+    @IBOutlet weak var scFirstAttack: UISegmentedControl!
+    @IBOutlet weak var scSecondAttack: UISegmentedControl!
+    @IBOutlet weak var scThirdAttack: UISegmentedControl!
+    @IBOutlet weak var scFirstDefence: UISegmentedControl!
+    @IBOutlet weak var scSecondDefence: UISegmentedControl!
+    @IBOutlet weak var scThirdDefence: UISegmentedControl!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         let mask = UIInterfaceOrientationMask.portrait
@@ -43,6 +57,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeActive(_:)),
+            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            object: nil)
+        
         challengesTableView.delegate = self
         challengesTableView.dataSource = self
         contactsTableView.delegate = self
@@ -55,8 +75,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        let numbers = "467654321,461234567,"
 //        dbConnector.checkPhonenumbers(numbersToCheck: numbers)
 //        print("\(formatNumber(number: "073423525432"))")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), for: UIControlEvents.valueChanged)
+        self.challengesTableView.addSubview(refreshControl)
+//        updateContactsArray()
+//        dbConnector.getStats()
+        let userSettings = UserDefaults()
+        if (userSettings.string(forKey: "userPhonenumber") != nil){
+            updateContactsArray()
+            dbConnector.getStats()
+        }
         
-        updateContactsArray()
+        
+        
+        
 //        dbConnector.newUser(phonenumber: "4493939393")
 //        let random = randomNumber()
 //        print("Random: \(random)")
@@ -84,12 +116,102 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Test sms
 //        sendSmsVerification(phonenumber: "46702666888")
         //End test sms
+        
+//        dbConnector.updateWins()
+//        dbConnector.updateGames()
+    }
+    
+    func applicationDidBecomeActive(_ notification: NSNotification) {
+        updateContactsArray()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let userSettings = UserDefaults()
+        
+        if (userSettings.string(forKey: "userPhonenumber") == nil){
+            startPhonenumberRegistration()
+        }
+    }
+    
+    func startPhonenumberRegistration(){
+        var phonenumber = ""
+        let alert = UIAlertController(title: "Register", message: "You need to register with your phonenumber.", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.keyboardType = UIKeyboardType.phonePad
+            textField.placeholder = "Enter your phonenumber"
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            phonenumber = (alert?.textFields![0].text)!
+            print("Text field: \(String(describing: phonenumber))")
+            phonenumber = self.formatNumber(number: phonenumber)
+            self.sendSmsVerification(phonenumber: phonenumber)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func refresh() {
+        updateContactsArray()
+    }
+    
+    func endRefresh(){
+        self.refreshControl.endRefreshing()
+    }
+    
+    func reserMovesInNewChallengeView(){
+        scFirstAttack.selectedSegmentIndex = UISegmentedControlNoSegment
+        scSecondAttack.selectedSegmentIndex = UISegmentedControlNoSegment
+        scThirdAttack.selectedSegmentIndex = UISegmentedControlNoSegment
+        scFirstDefence.selectedSegmentIndex = UISegmentedControlNoSegment
+        scSecondDefence.selectedSegmentIndex = UISegmentedControlNoSegment
+        scThirdDefence.selectedSegmentIndex = UISegmentedControlNoSegment
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    @IBAction func btnCancelChallenge(_ sender: UIButton) {
+        newChallengeView.isHidden = true
+        useChallenge = nil
+    }
+    
+    @IBAction func btnCreateNewChallenge(_ sender: UIButton) {
+//        print(scFirstAttack.isSelected)
+//        print(scFirstAttack.selectedSegmentIndex)
+        if scFirstAttack.selectedSegmentIndex != -1 && scSecondAttack.selectedSegmentIndex != -1 && scThirdAttack.selectedSegmentIndex != -1 && scFirstDefence.selectedSegmentIndex != -1 && scSecondDefence.selectedSegmentIndex != -1 && scThirdDefence.selectedSegmentIndex != -1 {
+            let firstAttack: Int = scFirstAttack.selectedSegmentIndex + 1
+            let secondAttack: Int = scSecondAttack.selectedSegmentIndex + 1
+            let thirdAttack: Int = scThirdAttack.selectedSegmentIndex + 1
+            let firstDefence: Int = scFirstDefence.selectedSegmentIndex + 1
+            let secondDefence: Int = scSecondDefence.selectedSegmentIndex + 1
+            let thirdDefence: Int = scThirdDefence.selectedSegmentIndex + 1
+            let moves = Moves(moves: "\(firstAttack)\(secondAttack)\(thirdAttack)\(firstDefence)\(secondDefence)\(thirdDefence)")
+            
+            if btnChallengeOutlet.titleLabel?.text == "Challenge" {
+                useChallenge?.attackerMoves = moves
+                dbConnector.newChallenge(challenge: useChallenge!)
+                useChallenge = nil
+            }else{
+                dbConnector.updateChallenge(moves: moves, challengeid: (useChallenge?.challengeID)!)
+                useChallenge = nil
+            }
+            reserMovesInNewChallengeView()
+            newChallengeView.isHidden = true
+            
+        }else{
+            // Info to select all moves
+            print("You need to select all moved to continue!")
+        }
+    }
+
+    
     @IBAction func btnNewCallenge(_ sender: UIButton) {
         contactsTableView.reloadData()
 //        print("\(contacts.count)")
@@ -98,6 +220,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateContactsArray(){
+        contacts.removeAll()
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { (isGranted, error) in
             let keys = [CNContactPhoneNumbersKey, CNContactFamilyNameKey, CNContactGivenNameKey]
@@ -149,6 +272,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func phonenumbersChecked(numbers: [String]){
         // Update a new array with contacts
+        friendsList.removeAll()
         for number in numbers {
             for contact in contacts {
                 if contact.phoneNumbers.contains(number){
@@ -164,6 +288,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateChallengeList(challengeList: [Challenge]){
+        challengesList.removeAll()
+        waitingList.removeAll()
+        doneList.removeAll()
         for challenge in challengeList{
             if challenge.defenderMoves == nil {
                 if challenge.attacker == dbConnector.loadPhonenumber() {
@@ -175,17 +302,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 doneList.append(challenge)
             }
         }
+        endRefresh()
         challengesTableView.reloadData()
     }
     
     func sendSmsVerification(phonenumber: String){
-        verificationCode = randomNumber()
+        let verificationCode = randomNumber()
 //        print("Code: \(verificationCode)")
-        apiConnector.verifyPhonenumber(phonenumber: phonenumber, vericationCode: verificationCode!)
+        apiConnector.verifyPhonenumber(phonenumber: phonenumber, vericationCode: verificationCode)
     }
     
-    func smsVerificationSent(){
+    func smsVerificationSent(phonenumber: String, verificatoinCode: String){
         // Verify code and save phonenumber in database
+        let alert = UIAlertController(title: "Verify sms code", message: "", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.keyboardType = UIKeyboardType.phonePad
+            textField.placeholder = "Enter code"
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let code = (alert?.textFields![0].text)!
+            //                let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+//            print("Text field: \(String(describing: phonenumber))")
+            if code == verificatoinCode {
+                let userDefaults = UserDefaults()
+                userDefaults.setValue(phonenumber, forKey: "userPhonenumber")
+                userDefaults.synchronize()
+                self.dbConnector.newUser(phonenumber: phonenumber)
+            }
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func updateStats(games: String, gamesWon: String) {
+        // Update stats in ui
+        numberOfGAmesPlayed.text = games
+        numberOfGamesWon.text = gamesWon
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -228,6 +385,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if tableView == challengesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 //            cell.textLabel?.text = list[indexPath.row]
+            cell.selectionStyle = .none
             if indexPath.section == 0{
                 var name = "Temp"
                 for friend in friendsList {
@@ -289,6 +447,36 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return 0
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == contactsTableView{
+//            startChallenge(phonenumber: friendsList[indexPath.row].phoneNumbers[0])
+            let newChallengerPhonenumber = friendsList[indexPath.row].phoneNumbers[0]
+            let challenge = Challenge()
+            challenge.defender = newChallengerPhonenumber
+            self.useChallenge = challenge
+            contactView.isHidden = true
+            btnChallengeOutlet.titleLabel?.text = "Challenge"
+            newChallengeView.isHidden = false
+        }else{
+            if indexPath.section != 1 {
+                
+            }
+            
+            if indexPath.section == 0 {
+                useChallenge = challengesList[indexPath.row]
+                btnChallengeOutlet.titleLabel?.text = "Fight"
+                newChallengeView.isHidden = false
+//              print("Fight")
+            }
+            if indexPath.section == 2 {
+                useChallenge = doneList[indexPath.row]
+                // Show fight
+                print("Show fight")
+            }
+        }
+    }
+    
     
     func formatNumber(number: String) -> String {
         
