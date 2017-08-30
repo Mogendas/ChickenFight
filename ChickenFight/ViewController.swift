@@ -71,7 +71,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         btnNewChallenge.imageView?.contentMode = .scaleAspectFit
         dbConnector.delegate = self
         apiConnector.delegate = self
-        contactView.layer.cornerRadius = 20
+        contactView.layer.cornerRadius = 15
+        newChallengeView.layer.cornerRadius = 15
 //        let numbers = "467654321,461234567,"
 //        dbConnector.checkPhonenumbers(numbersToCheck: numbers)
 //        print("\(formatNumber(number: "073423525432"))")
@@ -180,6 +181,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func btnCancelChallenge(_ sender: UIButton) {
         newChallengeView.isHidden = true
         useChallenge = nil
+    }
+    @IBAction func btnContactsViewCancel(_ sender: UIButton) {
+        contactView.isHidden = true
     }
     
     @IBAction func btnCreateNewChallenge(_ sender: UIButton) {
