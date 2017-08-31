@@ -18,6 +18,16 @@
 		4C646BAB1F3853990095E71D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C646BA91F3853990095E71D /* LaunchScreen.storyboard */; };
 		4C646BB31F3866490095E71D /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646BB21F3866490095E71D /* Challenge.swift */; };
 		4C646BB51F387B1D0095E71D /* Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C646BB41F387B1D0095E71D /* Moves.swift */; };
+		4C67AB971F57339A00B87CC4 /* FightVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67AB961F57339A00B87CC4 /* FightVC.swift */; };
+		4C67ABA21F57FB4000B87CC4 /* attackhigh.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB991F57FB4000B87CC4 /* attackhigh.atlas */; };
+		4C67ABA31F57FB4000B87CC4 /* attacklow.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9A1F57FB4000B87CC4 /* attacklow.atlas */; };
+		4C67ABA41F57FB4000B87CC4 /* attackmid.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9B1F57FB4000B87CC4 /* attackmid.atlas */; };
+		4C67ABA51F57FB4000B87CC4 /* blockhigh.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9C1F57FB4000B87CC4 /* blockhigh.atlas */; };
+		4C67ABA61F57FB4000B87CC4 /* blocklow.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9D1F57FB4000B87CC4 /* blocklow.atlas */; };
+		4C67ABA71F57FB4000B87CC4 /* blockmid.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9E1F57FB4000B87CC4 /* blockmid.atlas */; };
+		4C67ABA81F57FB4000B87CC4 /* idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67AB9F1F57FB4000B87CC4 /* idle.atlas */; };
+		4C67ABA91F57FB4000B87CC4 /* running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67ABA01F57FB4000B87CC4 /* running.atlas */; };
+		4C67ABAA1F57FB4000B87CC4 /* startrun.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C67ABA11F57FB4000B87CC4 /* startrun.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +44,16 @@
 		4C646BAC1F3853990095E71D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C646BB21F3866490095E71D /* Challenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		4C646BB41F387B1D0095E71D /* Moves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moves.swift; sourceTree = "<group>"; };
+		4C67AB961F57339A00B87CC4 /* FightVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FightVC.swift; sourceTree = "<group>"; };
+		4C67AB991F57FB4000B87CC4 /* attackhigh.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = attackhigh.atlas; sourceTree = "<group>"; };
+		4C67AB9A1F57FB4000B87CC4 /* attacklow.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = attacklow.atlas; sourceTree = "<group>"; };
+		4C67AB9B1F57FB4000B87CC4 /* attackmid.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = attackmid.atlas; sourceTree = "<group>"; };
+		4C67AB9C1F57FB4000B87CC4 /* blockhigh.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = blockhigh.atlas; sourceTree = "<group>"; };
+		4C67AB9D1F57FB4000B87CC4 /* blocklow.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = blocklow.atlas; sourceTree = "<group>"; };
+		4C67AB9E1F57FB4000B87CC4 /* blockmid.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = blockmid.atlas; sourceTree = "<group>"; };
+		4C67AB9F1F57FB4000B87CC4 /* idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = idle.atlas; sourceTree = "<group>"; };
+		4C67ABA01F57FB4000B87CC4 /* running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = running.atlas; sourceTree = "<group>"; };
+		4C67ABA11F57FB4000B87CC4 /* startrun.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = startrun.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,11 +96,13 @@
 		4C646B9C1F3853990095E71D /* ChickenFight */ = {
 			isa = PBXGroup;
 			children = (
+				4C67AB981F57F8E000B87CC4 /* Animations */,
 				4C3DAA501F48D9FE0071CAAF /* Model */,
 				4C646B9D1F3853990095E71D /* AppDelegate.swift */,
 				4C16B06A1F41C84400D2F2C5 /* DatabaseConnector.swift */,
 				4C3DAA4E1F4474660071CAAF /* ApiConnector.swift */,
 				4C646B9F1F3853990095E71D /* ViewController.swift */,
+				4C67AB961F57339A00B87CC4 /* FightVC.swift */,
 				4C646BA11F3853990095E71D /* Main.storyboard */,
 				4C646BA71F3853990095E71D /* Assets.xcassets */,
 				4C646BA91F3853990095E71D /* LaunchScreen.storyboard */,
@@ -88,6 +110,22 @@
 				4C646BA41F3853990095E71D /* ChickenFight.xcdatamodeld */,
 			);
 			path = ChickenFight;
+			sourceTree = "<group>";
+		};
+		4C67AB981F57F8E000B87CC4 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4C67AB991F57FB4000B87CC4 /* attackhigh.atlas */,
+				4C67AB9A1F57FB4000B87CC4 /* attacklow.atlas */,
+				4C67AB9B1F57FB4000B87CC4 /* attackmid.atlas */,
+				4C67AB9C1F57FB4000B87CC4 /* blockhigh.atlas */,
+				4C67AB9D1F57FB4000B87CC4 /* blocklow.atlas */,
+				4C67AB9E1F57FB4000B87CC4 /* blockmid.atlas */,
+				4C67AB9F1F57FB4000B87CC4 /* idle.atlas */,
+				4C67ABA01F57FB4000B87CC4 /* running.atlas */,
+				4C67ABA11F57FB4000B87CC4 /* startrun.atlas */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +188,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C67ABAA1F57FB4000B87CC4 /* startrun.atlas in Resources */,
+				4C67ABA41F57FB4000B87CC4 /* attackmid.atlas in Resources */,
+				4C67ABA91F57FB4000B87CC4 /* running.atlas in Resources */,
 				4C646BAB1F3853990095E71D /* LaunchScreen.storyboard in Resources */,
+				4C67ABA71F57FB4000B87CC4 /* blockmid.atlas in Resources */,
+				4C67ABA81F57FB4000B87CC4 /* idle.atlas in Resources */,
 				4C646BA81F3853990095E71D /* Assets.xcassets in Resources */,
 				4C646BA31F3853990095E71D /* Main.storyboard in Resources */,
+				4C67ABA51F57FB4000B87CC4 /* blockhigh.atlas in Resources */,
+				4C67ABA21F57FB4000B87CC4 /* attackhigh.atlas in Resources */,
+				4C67ABA61F57FB4000B87CC4 /* blocklow.atlas in Resources */,
+				4C67ABA31F57FB4000B87CC4 /* attacklow.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +213,7 @@
 				4C646BA61F3853990095E71D /* ChickenFight.xcdatamodeld in Sources */,
 				4C646BB31F3866490095E71D /* Challenge.swift in Sources */,
 				4C3DAA521F48DA200071CAAF /* GameContact.swift in Sources */,
+				4C67AB971F57339A00B87CC4 /* FightVC.swift in Sources */,
 				4C646BA01F3853990095E71D /* ViewController.swift in Sources */,
 				4C646BB51F387B1D0095E71D /* Moves.swift in Sources */,
 				4C3DAA4F1F4474660071CAAF /* ApiConnector.swift in Sources */,

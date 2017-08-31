@@ -381,11 +381,34 @@
                         <outlet property="scSecondDefence" destination="7jO-Yl-MKk" id="hwd-KT-2P9"/>
                         <outlet property="scThirdAttack" destination="bEe-1F-xMk" id="G3v-am-k4l"/>
                         <outlet property="scThirdDefence" destination="9SN-9V-7nC" id="loB-mF-tZk"/>
+                        <segue destination="MwU-SX-31Y" kind="show" identifier="Fight" id="rjQ-xn-mrq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="134.5108695652174"/>
+        </scene>
+        <!--FightVC-->
+        <scene sceneID="g3Q-tF-H2K">
+            <objects>
+                <viewController id="MwU-SX-31Y" customClass="FightVC" customModule="ChickenFight" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2vk-qk-SHR"/>
+                        <viewControllerLayoutGuide type="bottom" id="EA4-Br-TcI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KRc-nd-3Dd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="ean-wR-J5I" kind="unwind" identifier="BackToMenu" unwindAction="unwinedActionWithSegue:" id="6v9-X0-SiF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xax-W9-ge0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ean-wR-J5I" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1012" y="134"/>
         </scene>
     </scenes>
     <resources>

@@ -180,7 +180,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func btnCancelChallenge(_ sender: UIButton) {
         newChallengeView.isHidden = true
-        useChallenge = nil
+//        useChallenge = nil
     }
     @IBAction func btnContactsViewCancel(_ sender: UIButton) {
         contactView.isHidden = true
@@ -211,10 +211,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
         }else{
             // Info to select all moves
-            print("You need to select all moved to continue!")
+            print("You need to select all moves to continue!")
         }
     }
-
+    
+    @IBAction func unwinedAction(segue: UIStoryboardSegue){
+        
+    }
     
     @IBAction func btnNewCallenge(_ sender: UIButton) {
         contactsTableView.reloadData()
@@ -475,9 +478,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             if indexPath.section == 2 {
                 useChallenge = doneList[indexPath.row]
+                performSegue(withIdentifier: "Fight", sender: self)
                 // Show fight
                 print("Show fight")
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Fight" {
+            let fightScene = segue.destination as? FightVC
+//            let indexPath = self.challengesTableView.indexPathForSelectedRow
+            fightScene?.challenge = useChallenge
         }
     }
     
