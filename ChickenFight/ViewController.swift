@@ -62,6 +62,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             selector: #selector(applicationDidBecomeActive(_:)),
             name: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil)
+//        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         
         challengesTableView.delegate = self
         challengesTableView.dataSource = self
@@ -480,7 +481,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 useChallenge = doneList[indexPath.row]
                 performSegue(withIdentifier: "Fight", sender: self)
                 // Show fight
-                print("Show fight")
+//                print("Show fight")
             }
         }
     }

@@ -28,6 +28,7 @@ class FightVC: ViewController {
     
     let attackerNode = SKSpriteNode(imageNamed: "chicken.png")
     let defenderNode = SKSpriteNode(imageNamed: "chicken.png")
+    let challengeControllerNode:SKNode = SKNode()
     
     var idleArray = [SKTexture]()
     var startRunningArray = [SKTexture]()
@@ -61,7 +62,7 @@ class FightVC: ViewController {
         
         defenderNode.xScale = defenderNode.xScale * -1
         
-        UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+//        UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
         
         NotificationCenter.default.addObserver(self, selector: #selector(FightVC.deviceDidRotate), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
         
@@ -73,26 +74,106 @@ class FightVC: ViewController {
         scene.addChild(attackerNode)
         defenderNode.position = CGPoint(x: (scene.frame.width / 3) * 2, y: scene.frame.height / 2)
         scene.addChild(defenderNode)
-
-        showFight()
-
     }
     
     func deviceDidRotate(){
-        print("Turn")
+        switch UIDevice.current.orientation {
+        case .portrait:
+//            print("Portrait")
+            pauseChallenge()
+            break
+            
+        case .portraitUpsideDown:
+//            print("PortraitUpsideDown")
+            pauseChallenge()
+            break
+            
+        case .landscapeLeft:
+//            print("LandscapeLeft")
+            startChallenge()
+            break
+            
+        case .landscapeRight:
+//            print("LandscapeRight")
+            startChallenge()
+            break
+
+        default:
+//            print("Another")
+            break
+            
+        }
     }
     
-    func showFight(){
-        
+    func startChallenge(){
+        if challengeControllerNode.parent == nil {
+            self.showChallenge()
+        }else{
+            if challengeControllerNode.isPaused == true {
+                challengeControllerNode.isPaused = false
+                self.defenderNode.isPaused = false
+                self.attackerNode.isPaused = false
+            }
+        }
+    }
+    
+    func pauseChallenge(){
+        if challengeControllerNode.isPaused == false {
+            challengeControllerNode.isPaused = true
+            self.defenderNode.isPaused = true
+            self.attackerNode.isPaused = true
+        }
+    }
+    
+    func showChallenge(){
+        let waitRound = SKAction.wait(forDuration: 3.5)
+        let waitToSeque = SKAction.wait(forDuration: 5)
+        scene.addChild(challengeControllerNode)
 //        showRound(attack: (challenge?.attackerMoves?.attack1)!, defence: (challenge?.defenderMoves?.attack1)!, reverse: false)
+        let showFightSequence = SKAction.sequence([
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.attackerMoves?.attack1)!, defence: (self.challenge?.defenderMoves?.defence1)!, reverse: false)
+            },
+            waitRound,
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.defenderMoves?.attack1)!, defence: (self.challenge?.attackerMoves?.defence1)!, reverse: true)
+            },
+            waitRound,
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.attackerMoves?.attack2)!, defence: (self.challenge?.defenderMoves?.defence2)!, reverse: false)
+            },
+            waitRound,
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.defenderMoves?.attack2)!, defence: (self.challenge?.attackerMoves?.defence2)!, reverse: true)
+            },
+            waitRound,
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.attackerMoves?.attack3)!, defence: (self.challenge?.defenderMoves?.defence3)!, reverse: false)
+            },
+            waitRound,
+            SKAction.run {
+                self.showRound(attack: (self.challenge?.defenderMoves?.attack3)!, defence: (self.challenge?.attackerMoves?.defence3)!, reverse: true)
+            },
+            waitToSeque,
+            SKAction.run {
+                self.performSegue(withIdentifier: "BackToMenu", sender: self)
+            },
+            
+            ])
+        self.challengeControllerNode.run(showFightSequence)
         
-        showRound(attack: 1, defence: 1, reverse: false)
+//        showRound(attack: 1, defence: 1, reverse: false)
 
     }
     
     func showRound(attack: Int, defence: Int, reverse: Bool){
+        attackerNode.removeAllActions()
+        defenderNode.removeAllActions()
         let idleAction = SKAction.animate(with: idleArray, timePerFrame: 0.08)
-        let repeatIdle = SKAction.repeat(idleAction, count: 2)
+//        let repeatIdle = SKAction.repeat(idleAction, count: 2)
+        let repeatIdle = SKAction.repeatForever(idleAction)
+        attackerNode.run(repeatIdle, withKey: "attackerIdle")
+        defenderNode.run(repeatIdle, withKey: "defenderIdle")
 
         var attackAction = SKAction()
         var attackResetAction = SKAction()
@@ -134,41 +215,46 @@ class FightVC: ViewController {
             break
         }
         
-        let waitAction = SKAction.wait(forDuration: 2)
+        let waitIdleAction = SKAction.wait(forDuration: 2)
+        let waitForResetAction = SKAction.wait(forDuration: 1)
         
         if reverse {
             let attackerSequence = SKAction.sequence([
+//                SKAction.run {
+//                    
+//                    self.defenderNode.run(repeatIdle)
+//                },
+                waitIdleAction,
                 SKAction.run {
-                    
-                    self.defenderNode.run(repeatIdle)
+                    self.defenderNode.removeAction(forKey: "defenderIdle")
+//                    self.defenderNode.removeAllActions()
+                    self.defenderNode.run(attackAction)
                 },
-                SKAction.wait(forDuration: 3),
+                waitForResetAction,
                 SKAction.run {
-                    self.defenderNode.run(attackAction) {
-                    }
-                },
-                waitAction,
-                SKAction.run {
+//                    print("Reset")
                     self.defenderNode.run(attackResetAction){
-                        self.defenderNode.run(repeatIdle)
+//                        self.defenderNode.run(repeatIdle)
                     }
                 }
                 
                 ])
             
             let defenderSequence = SKAction.sequence([
+//                SKAction.run {
+//                    self.attackerNode.run(repeatIdle)
+//                },
+                waitIdleAction,
                 SKAction.run {
-                    self.attackerNode.run(repeatIdle)
+                    self.attackerNode.removeAction(forKey: "attackerIdle")
+//                    self.attackerNode.removeAllActions()
+                    self.attackerNode.run(defenceAction)
                 },
-                SKAction.wait(forDuration: 3),
+                waitForResetAction,
                 SKAction.run {
-                    self.attackerNode.run(defenceAction) {
-                    }
-                },
-                waitAction,
-                SKAction.run {
+//                    print("Reset")
                     self.attackerNode.run(defenceResetAction){
-                        self.attackerNode.run(repeatIdle)
+//                        self.attackerNode.run(repeatIdle)
                     }
                 }
                 
@@ -179,35 +265,39 @@ class FightVC: ViewController {
         }else{
         
         let attackerSequence = SKAction.sequence([
+//            SKAction.run {
+//                
+//                self.attackerNode.run(repeatIdle)
+//            },
+            waitIdleAction,
             SKAction.run {
-                
-                self.attackerNode.run(repeatIdle)
+                self.attackerNode.removeAction(forKey: "attackerIdle")
+//                self.attackerNode.removeAllActions()
+                self.attackerNode.run(attackAction)
             },
-            SKAction.wait(forDuration: 3),
+            waitForResetAction,
             SKAction.run {
-                self.attackerNode.run(attackAction) {
-                }
-            },
-            waitAction,
-            SKAction.run {
+//                print("Reset")
                 self.attackerNode.run(attackResetAction){
-                    self.attackerNode.run(repeatIdle)
+//                    self.attackerNode.run(repeatIdle)
                 }
             }])
         
         let defenderSequence = SKAction.sequence([
+//            SKAction.run {
+//                self.defenderNode.run(repeatIdle)
+//            },
+            waitIdleAction,
             SKAction.run {
-                self.defenderNode.run(repeatIdle)
+                self.defenderNode.removeAction(forKey: "defenderIdle")
+//                self.defenderNode.removeAllActions()
+                self.defenderNode.run(defenceAction)
             },
-            SKAction.wait(forDuration: 3),
+            waitForResetAction,
             SKAction.run {
-                self.defenderNode.run(defenceAction) {
-                }
-            },
-            waitAction,
-            SKAction.run {
+//                print("Reset")
                 self.defenderNode.run(defenceResetAction){
-                    self.defenderNode.run(repeatIdle)
+//                    self.defenderNode.run(repeatIdle)
                 }
             }])
             self.defenderNode.run(defenderSequence)
