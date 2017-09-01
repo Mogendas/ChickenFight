@@ -70,9 +70,11 @@ class FightVC: ViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         skView.presentScene(scene)
-        attackerNode.position = CGPoint(x: scene.frame.width / 3, y: scene.frame.height / 2)
+        attackerNode.anchorPoint = CGPoint(x: 1, y: 0.5)
+        attackerNode.position = CGPoint(x: scene.frame.width / 1.7, y: scene.frame.height / 2)
         scene.addChild(attackerNode)
-        defenderNode.position = CGPoint(x: (scene.frame.width / 3) * 2, y: scene.frame.height / 2)
+        defenderNode.position = CGPoint(x: scene.frame.width / 2.3, y: scene.frame.height / 2)
+        defenderNode.anchorPoint = CGPoint(x: 1, y: 0.5)
         scene.addChild(defenderNode)
     }
     
