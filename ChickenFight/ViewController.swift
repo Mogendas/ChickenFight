@@ -82,11 +82,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.challengesTableView.addSubview(refreshControl)
 //        updateContactsArray()
 //        dbConnector.getStats()
-        let userSettings = UserDefaults()
-        if (userSettings.string(forKey: "userPhonenumber") != nil){
-            updateContactsArray()
-            dbConnector.getStats()
-        }
+//        let userSettings = UserDefaults()
+//        if (userSettings.string(forKey: "userPhonenumber") != nil){
+//            updateContactsArray()
+//            dbConnector.getStats()
+//        }
         
         
         
@@ -124,7 +124,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func applicationDidBecomeActive(_ notification: NSNotification) {
-        updateContactsArray()
+        let userSettings = UserDefaults()
+        if (userSettings.string(forKey: "userPhonenumber") != nil){
+            updateContactsArray()
+            dbConnector.getStats()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -206,6 +210,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }else{
                 useChallenge?.defenderMoves = moves
                 dbConnector.updateChallenge(moves: moves, challengeid: (useChallenge?.challengeID)!)
+                checkWinnerAndUpdateDB(challenge: useChallenge!)
+                for friend in friendsList {
+                    if friend.phoneNumbers[0] == useChallenge?.attacker {
+                        useChallenge?.attacker = friend.name
+                    }
+                }
                 performSegue(withIdentifier: "Fight", sender: self)
                 useChallenge = nil
             }
@@ -242,20 +252,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
                 let name = "\(contact.givenName) \(contact.familyName)"
                 var phoneNumbers = [String]()
-                
-                for phoneNumber in contact.phoneNumbers {
-                    // Whatever you want to do with it
-//                    if let number = phoneNumber.value as? CNPhoneNumber {
-//                        print(phoneNumber.value.stringValue)
-//                    }
-//                    print("Phonenumber:\(phone)")
-                    let newNumber = self.formatNumber(number: phoneNumber.value.stringValue)
-                    phoneNumbers.append(newNumber)
+                if contact.phoneNumbers.count != 0 {
+                    for phoneNumber in contact.phoneNumbers {
+                        // Whatever you want to do with it
+    //                    if let number = phoneNumber.value as? CNPhoneNumber {
+    //                        print(phoneNumber.value.stringValue)
+    //                    }
+    //                    print("Phonenumber:\(phone)")
+                        let newNumber = self.formatNumber(number: phoneNumber.value.stringValue)
+                        phoneNumbers.append(newNumber)
+                        
+                    }
                     
+                    let newContact = GameContact(name: name, phoneNumbers: phoneNumbers)
+                    self.contacts.append(newContact)
                 }
-                
-                let newContact = GameContact(name: name, phoneNumbers: phoneNumbers)
-                self.contacts.append(newContact)
                 
             })
 //            print("Contacts: \(self.contacts)")
@@ -353,6 +364,38 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Update stats in ui
         numberOfGAmesPlayed.text = games
         numberOfGamesWon.text = gamesWon
+    }
+    
+    func checkWinnerAndUpdateDB(challenge: Challenge){
+        var attackerScore = 0
+        var defenderScore = 0
+        
+        if challenge.attackerMoves?.attack1 != challenge.defenderMoves?.defence1{
+            attackerScore += 1
+        }
+        if challenge.attackerMoves?.attack2 != challenge.defenderMoves?.defence2{
+            attackerScore += 1
+        }
+        if challenge.attackerMoves?.attack3 != challenge.defenderMoves?.defence3{
+            attackerScore += 1
+        }
+        if challenge.defenderMoves?.attack1 != challenge.attackerMoves?.defence1{
+            defenderScore += 1
+        }
+        if challenge.defenderMoves?.attack2 != challenge.attackerMoves?.defence2{
+            defenderScore += 1
+        }
+        if challenge.defenderMoves?.attack3 != challenge.attackerMoves?.defence3{
+            defenderScore += 1
+        }
+        if attackerScore > defenderScore{
+            dbConnector.updateWins(phonenumber: (challenge.attacker)!)
+        }else{
+            dbConnector.updateWins(phonenumber: (challenge.defender)!)
+        }
+        
+        dbConnector.updateGames(phonenumber: (challenge.attacker)!)
+        dbConnector.updateGames(phonenumber: (challenge.defender)!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -477,11 +520,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             if indexPath.section == 0 {
                 useChallenge = challengesList[indexPath.row]
-                for friend in friendsList {
-                    if friend.phoneNumbers[0] == useChallenge?.attacker {
-                        useChallenge?.attacker = friend.name
-                    }
-                }
+//                for friend in friendsList {
+//                    if friend.phoneNumbers[0] == useChallenge?.attacker {
+//                        useChallenge?.attacker = friend.name
+//                    }
+//                }
                 
                 btnChallengeOutlet.titleLabel?.text = "Fight"
                 newChallengeView.isHidden = false

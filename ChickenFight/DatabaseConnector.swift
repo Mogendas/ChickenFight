@@ -363,9 +363,9 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
         }
     }
     
-    func updateWins(){
+    func updateWins(phonenumber: String){
         let url: URL = URL(string: urlPath)!
-        let phonenumber = loadPhonenumber()
+//        let phonenumber = loadPhonenumber()
         let request = NSMutableURLRequest(url: url)
         
         
@@ -409,11 +409,11 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
         task.resume()
     }
     
-    func updateGames(){
+    func updateGames(phonenumber: String){
         let url: URL = URL(string: urlPath)!
-        let phonenumber = loadPhonenumber()
+//        let phonenumber = loadPhonenumber()
         let request = NSMutableURLRequest(url: url)
-        
+        print(phonenumber)
         
         request.httpMethod = "POST"
         var postParameters = "action=updategames"

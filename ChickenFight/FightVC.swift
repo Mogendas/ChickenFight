@@ -367,7 +367,7 @@ class FightVC: ViewController {
     
     func showChallenge(){
         let waitRound = SKAction.wait(forDuration: 3.8)
-        let waitToSeque = SKAction.wait(forDuration: 15)
+        let waitToSeque = SKAction.wait(forDuration: 3)
         scene.addChild(challengeControllerNode)
 //        showRound(attack: (challenge?.attackerMoves?.attack1)!, defence: (challenge?.defenderMoves?.attack1)!, reverse: false)
         let showFightSequence = SKAction.sequence([
