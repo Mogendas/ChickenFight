@@ -204,7 +204,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 dbConnector.newChallenge(challenge: useChallenge!)
                 useChallenge = nil
             }else{
+                useChallenge?.defenderMoves = moves
                 dbConnector.updateChallenge(moves: moves, challengeid: (useChallenge?.challengeID)!)
+                performSegue(withIdentifier: "Fight", sender: self)
                 useChallenge = nil
             }
             reserMovesInNewChallengeView()
@@ -463,26 +465,55 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let challenge = Challenge()
             challenge.defender = newChallengerPhonenumber
             self.useChallenge = challenge
+            
             contactView.isHidden = true
             btnChallengeOutlet.titleLabel?.text = "Challenge"
             newChallengeView.isHidden = false
         }else{
+            
             if indexPath.section != 1 {
                 
             }
             
             if indexPath.section == 0 {
                 useChallenge = challengesList[indexPath.row]
+                for friend in friendsList {
+                    if friend.phoneNumbers[0] == useChallenge?.attacker {
+                        useChallenge?.attacker = friend.name
+                    }
+                }
+                
                 btnChallengeOutlet.titleLabel?.text = "Fight"
                 newChallengeView.isHidden = false
 //              print("Fight")
             }
             if indexPath.section == 2 {
                 useChallenge = doneList[indexPath.row]
+                let userSettings = UserDefaults()
+                if (userSettings.string(forKey: "userPhonenumber") != nil){
+                    let userPhonenumber = userSettings.string(forKey: "userPhonenumber")
+                    if userPhonenumber == useChallenge?.attacker {
+                        // You are attacking
+                        for friend in friendsList {
+                            if friend.phoneNumbers[0] == useChallenge?.defender{
+                                useChallenge?.defender = friend.name
+                            }
+                        }
+                    }else{
+                        // You are defending
+                        for friend in friendsList {
+                            if friend.phoneNumbers[0] == useChallenge?.attacker{
+                                useChallenge?.attacker = friend.name
+                            }
+                        }
+                    }
+                }
+                dbConnector.setWatched(challengeid: (useChallenge?.challengeID)!)
                 performSegue(withIdentifier: "Fight", sender: self)
                 // Show fight
 //                print("Show fight")
             }
+            
         }
     }
     
