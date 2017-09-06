@@ -141,11 +141,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func startPhonenumberRegistration(){
         var phonenumber = ""
-        let alert = UIAlertController(title: "Register", message: "You need to register with your phonenumber.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Register", message: "Enter your phonenuber to registrate.", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             textField.keyboardType = UIKeyboardType.phonePad
-            textField.placeholder = "Enter your phonenumber"
+            textField.placeholder = "ex. 00461234567"
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             

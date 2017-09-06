@@ -15,6 +15,7 @@ class FightVC: ViewController {
     }
     
     let scene = SKScene(size: CGSize(width: 1280, height: 720))
+    let background = SKSpriteNode.init(imageNamed: "background")
     
     var challenge: Challenge?
     
@@ -57,10 +58,11 @@ class FightVC: ViewController {
     var defenderScore = 0
     
     struct Layer {
-        static let Defender: CGFloat = 0
-        static let Attacker: CGFloat = 1
-        static let UI: CGFloat = 2
-        static let Messages: CGFloat = 3
+        static let Background: CGFloat = 0
+        static let Defender: CGFloat = 1
+        static let Attacker: CGFloat = 2
+        static let UI: CGFloat = 3
+        static let Messages: CGFloat = 4
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
@@ -143,7 +145,11 @@ class FightVC: ViewController {
         
         attackerNode.position = CGPoint(x: (scene.frame.width / 2) + (0.325 * attackerNode.frame.size.width), y: scene.frame.height / 2)
         defenderNode.position = CGPoint(x: (scene.frame.width / 2) - (0.325 * defenderNode.frame.size.width), y: scene.frame.height / 2)
+        background.anchorPoint = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: 0, y: 0)
+        background.zPosition = Layer.Background
         
+        scene.addChild(background)
         scene.addChild(attackerNode)
         scene.addChild(defenderNode)
         scene.addChild(lblAttackerName)
@@ -156,14 +162,15 @@ class FightVC: ViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         switch UIDevice.current.orientation {
-        case .portrait:
-            showRotatePhone()
-            break
-            
-        case .portraitUpsideDown:
-            showRotatePhone()
-            break
+//        case .portrait:
+//            showRotatePhone()
+//            break
+//            
+//        case .portraitUpsideDown:
+//            showRotatePhone()
+//            break
             
         case .landscapeLeft:
             startChallenge()
@@ -174,7 +181,7 @@ class FightVC: ViewController {
             break
             
         default:
-            //            print("Another")
+            showRotatePhone()
             break
             
         }
@@ -220,14 +227,17 @@ class FightVC: ViewController {
     }
     
     func showRotatePhone(){
-        rotatePhone.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 2)
-        rotatePhone.size = CGSize(width: 400, height: 400)
-        rotatePhone.zRotation = CGFloat(Double.pi / 2)
-        rotatePhone.zPosition = Layer.Messages
-        scene.addChild(rotatePhone)
+        if scene.children.contains(rotatePhone) == false {
+            rotatePhone.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 2)
+            rotatePhone.size = CGSize(width: 400, height: 400)
+            rotatePhone.zRotation = CGFloat(Double.pi / 2)
+            rotatePhone.zPosition = Layer.Messages
+            scene.addChild(rotatePhone)
+        }
     }
     
     func deviceDidRotate(){
+//        print("Rotate")
         switch UIDevice.current.orientation {
         case .portrait:
 //            print("Portrait")
@@ -347,13 +357,10 @@ class FightVC: ViewController {
     
     func startChallenge(){
         if challengeControllerNode.parent == nil {
+//            print("Showing Challenge")
             self.showChallenge()
         }else{
-            if challengeControllerNode.isPaused == true {
-                challengeControllerNode.isPaused = false
-                self.defenderNode.isPaused = false
-                self.attackerNode.isPaused = false
-            }
+            unpauseChallenge()
         }
     }
     
@@ -365,7 +372,16 @@ class FightVC: ViewController {
         }
     }
     
+    func unpauseChallenge(){
+        if challengeControllerNode.isPaused == true {
+            challengeControllerNode.isPaused = false
+            self.defenderNode.isPaused = false
+            self.attackerNode.isPaused = false
+        }
+    }
+    
     func showChallenge(){
+        unpauseChallenge()
         let waitRound = SKAction.wait(forDuration: 3.8)
         let waitToSeque = SKAction.wait(forDuration: 3)
         scene.addChild(challengeControllerNode)
