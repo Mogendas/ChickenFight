@@ -448,7 +448,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //            cell.textLabel?.text = list[indexPath.row]
             cell.selectionStyle = .none
             if indexPath.section == 0{
-                var name = "Temp"
+                var name = challengesList[indexPath.row].attacker
                 for friend in friendsList {
                     if friend.phoneNumbers[0] == challengesList[indexPath.row].attacker{
                         name = friend.name
@@ -457,7 +457,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cell.textLabel?.text = name
             }
             if indexPath.section == 1 {
-                var name = "Temp"
+                var name = waitingList[indexPath.row].defender
                 for friend in friendsList {
                     if friend.phoneNumbers[0] == waitingList[indexPath.row].defender{
                         name = friend.name
@@ -468,14 +468,35 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                cell.textLabel?.text = waitingList[indexPath.row].defender
             }
             if indexPath.section == 2 {
-                var name = "Temp"
-                for friend in friendsList {
-                    if friend.phoneNumbers[0] == doneList[indexPath.row].defender{
-                        name = friend.name
-                    }else if friend.phoneNumbers[0] == doneList[indexPath.row].attacker{
-                        name = friend.name
+                var name = "Unknown"
+                let userSettings = UserDefaults()
+                if let userPhonenumber = userSettings.string(forKey: "userPhonenumber") {
+                    if userPhonenumber == doneList[indexPath.row].attacker {
+                        name = doneList[indexPath.row].defender!
+                        for friend in friendsList {
+                            if friend.phoneNumbers[0] == doneList[indexPath.row].defender {
+                                name = friend.name
+                            }
+                        }
+                    }else{
+                        name = doneList[indexPath.row].attacker!
+                        for friend in friendsList {
+                            if friend.phoneNumbers[0] == doneList[indexPath.row].attacker {
+                                name = friend.name
+                            }
+                        }
                     }
+                    
+                    
                 }
+                
+//                for friend in friendsList {
+//                    if friend.phoneNumbers[0] == doneList[indexPath.row].defender{
+//                        name = friend.name
+//                    }else if friend.phoneNumbers[0] == doneList[indexPath.row].attacker{
+//                        name = friend.name
+//                    }
+//                }
                 cell.textLabel?.text = name
             }
             return cell
