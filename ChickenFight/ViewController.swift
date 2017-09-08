@@ -153,7 +153,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }))
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             phonenumber = (alert?.textFields![0].text)!
-            print("Text field: \(String(describing: phonenumber))")
+//            print("Text field: \(String(describing: phonenumber))")
             phonenumber = self.formatNumber(number: phonenumber)
             self.sendSmsVerification(phonenumber: phonenumber)
         }))
@@ -325,6 +325,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 doneList.append(challenge)
             }
         }
+        challengesList.sort(by: {$0.challengeID! > $1.challengeID!})
+        waitingList.sort(by: {$0.challengeID! > $1.challengeID!})
+        doneList.sort(by: {$0.challengeID! > $1.challengeID!})
+//        for challenge in doneList {
+//            print(challenge.challengeID)
+//        }
         endRefresh()
         challengesTableView.reloadData()
     }

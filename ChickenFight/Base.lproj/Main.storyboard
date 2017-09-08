@@ -164,33 +164,33 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="usO-xf-ifT">
-                                <rect key="frame" x="36" y="40" width="303" height="607"/>
+                                <rect key="frame" x="36" y="142.5" width="303" height="382.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ell-Ag-irJ">
-                                        <rect key="frame" x="8" y="8" width="287" height="348.5"/>
+                                        <rect key="frame" x="8" y="8" width="287" height="348"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your moves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfh-Dq-7eX">
-                                                <rect key="frame" x="68" y="0.0" width="151.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="59.5" y="0.0" width="168.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hfs-jn-d70" userLabel="Attack">
-                                                <rect key="frame" x="12.5" y="40.5" width="262" height="119"/>
+                                                <rect key="frame" x="12.5" y="43" width="262" height="117.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XwK-Hl-4eF" userLabel="Attack label">
-                                                        <rect key="frame" x="73.5" y="0.0" width="115.5" height="23"/>
+                                                        <rect key="frame" x="76.5" y="0.0" width="109.5" height="21.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attack moves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMj-Ys-Aaj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="115.5" height="23"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="109.5" height="21.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4Fy-dm-YLk" userLabel="First attack">
-                                                        <rect key="frame" x="0.0" y="27" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="25.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhQ-kP-qec">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -209,7 +209,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="maY-1w-4Iq" userLabel="Seckond attack">
-                                                        <rect key="frame" x="0.0" y="59" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="57.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Second" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jr-Ak-oCt">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -228,7 +228,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZGa-5t-qLz" userLabel="Third attack">
-                                                        <rect key="frame" x="0.0" y="91" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="89.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Third" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzd-vu-Ay7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -249,16 +249,16 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nzu-V3-LdJ" userLabel="Defence">
-                                                <rect key="frame" x="12.5" y="179.5" width="262" height="119"/>
+                                                <rect key="frame" x="12.5" y="180.5" width="262" height="117.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defence moves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iV-JT-6st">
-                                                        <rect key="frame" x="65" y="0.0" width="132" height="23"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <rect key="frame" x="68.5" y="0.0" width="125.5" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gxO-9E-5iQ" userLabel="First defence">
-                                                        <rect key="frame" x="0.0" y="27" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="25.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fle-Vd-nig">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -277,7 +277,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0JM-80-ELL" userLabel="Second defence">
-                                                        <rect key="frame" x="0.0" y="59" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="57.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Second" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alU-d2-Lis">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -296,7 +296,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JMC-2e-4kd" userLabel="Third defence">
-                                                        <rect key="frame" x="0.0" y="91" width="262" height="28"/>
+                                                        <rect key="frame" x="0.0" y="89.5" width="262" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Third" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3H-WD-Y3B">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131" height="28"/>
@@ -317,7 +317,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="cKI-WE-snz" userLabel="Buttons">
-                                                <rect key="frame" x="59.5" y="318.5" width="168" height="30"/>
+                                                <rect key="frame" x="59.5" y="318" width="168" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNZ-3t-cvh">
                                                         <rect key="frame" x="0.0" y="0.0" width="69" height="30"/>
@@ -342,6 +342,7 @@
                                 <constraints>
                                     <constraint firstItem="Ell-Ag-irJ" firstAttribute="top" secondItem="usO-xf-ifT" secondAttribute="top" constant="8" id="1TB-ka-5ff"/>
                                     <constraint firstItem="Ell-Ag-irJ" firstAttribute="leading" secondItem="usO-xf-ifT" secondAttribute="leading" constant="8" id="40K-xK-GNw"/>
+                                    <constraint firstAttribute="height" secondItem="Ell-Ag-irJ" secondAttribute="height" multiplier="1.1" id="GCR-en-yBQ"/>
                                     <constraint firstAttribute="trailing" secondItem="Ell-Ag-irJ" secondAttribute="trailing" constant="8" id="b7q-QY-DBy"/>
                                 </constraints>
                             </view>
@@ -352,14 +353,13 @@
                             <constraint firstItem="jK6-Ml-kmn" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="2na-c6-W8Z"/>
                             <constraint firstItem="jK6-Ml-kmn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4t0-7U-h41"/>
                             <constraint firstItem="usO-xf-ifT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="CM6-lP-MMd"/>
+                            <constraint firstItem="usO-xf-ifT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IVW-QM-y5h"/>
                             <constraint firstAttribute="trailing" secondItem="IIK-3Y-ZQc" secondAttribute="trailing" id="Mdd-K8-UEz"/>
                             <constraint firstAttribute="trailing" secondItem="jK6-Ml-kmn" secondAttribute="trailing" id="Rxf-9i-M51"/>
                             <constraint firstItem="xDq-UA-d0c" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="SOc-Il-aew"/>
                             <constraint firstItem="IIK-3Y-ZQc" firstAttribute="top" secondItem="jK6-Ml-kmn" secondAttribute="bottom" id="Sbs-pL-zNm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xDq-UA-d0c" secondAttribute="trailing" constant="20" id="Vmy-X4-iiH"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="usO-xf-ifT" secondAttribute="bottom" constant="20" id="adf-yc-Vbj"/>
                             <constraint firstItem="jK6-Ml-kmn" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="e5Q-Z3-25V"/>
-                            <constraint firstItem="usO-xf-ifT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="llv-3e-p2M"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="IIK-3Y-ZQc" secondAttribute="bottom" id="oRo-nb-PXN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="usO-xf-ifT" secondAttribute="trailing" constant="20" id="rlj-pz-xWe"/>
                             <constraint firstItem="xDq-UA-d0c" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="xBX-IQ-ERF"/>

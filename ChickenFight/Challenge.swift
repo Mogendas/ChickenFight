@@ -19,31 +19,5 @@ class Challenge {
         
     }
     
-//    init(opponent: String, myMoves: Moves) {
-//        self.opponent = opponent
-//        self.myMoves = myMoves
-//    }
-//    
-//    init(opponent: String, opponentMoves: Moves) {
-//        self.opponent = opponent
-//        self.opponentMoves = opponentMoves
-//    }
-//    
-//    init(challengeID: Int, opponent: String){
-//        self.challengeID = challengeID
-//        self.opponent = opponent
-//    }
-//    
-//    func addMyMoves(moves: Moves) {
-//        self.myMoves = moves
-//    }
-//    
-//    func addOpponentMoves(moves: Moves){
-//        self.opponentMoves = moves
-//    }
-//    
-//    func getMyMovesAsString() -> String {
-//        let moves:String = (myMoves?.getMovesAsString())!
-//        return moves
-//    }
+    
 }

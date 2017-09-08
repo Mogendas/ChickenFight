@@ -214,6 +214,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     challenge.attacker = attacker
     //                challenge.attackerMoves = Moves(moves: attackerMoves)
                     challenge.defender = defender
+//                    challenge.timestamp = timestamp
                     
                     if let attackMoves = game["attacker_moves"] as? String{
     //                    print("Attack: \(attackMoves)")
@@ -413,7 +414,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
         let url: URL = URL(string: urlPath)!
 //        let phonenumber = loadPhonenumber()
         let request = NSMutableURLRequest(url: url)
-        print(phonenumber)
+//        print(phonenumber)
         
         request.httpMethod = "POST"
         var postParameters = "action=updategames"
