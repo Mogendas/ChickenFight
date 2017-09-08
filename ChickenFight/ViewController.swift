@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var waitingList = [Challenge]()
     var doneList = [Challenge]()
     var useChallenge: Challenge?
+    var countryCode = "46"
     
     var refreshControl = UIRefreshControl()
     let sectionTitleArray: [String] = ["Challanges", "Waiting", "Done"]
@@ -161,6 +162,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func refresh() {
         updateContactsArray()
+        dbConnector.getStats()
     }
     
     func endRefresh(){
@@ -586,7 +588,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if startOfString == "0"{
             formattedNumber = formattedNumber.substring(from: index)
-            formattedNumber = "46" + formattedNumber
+            formattedNumber = countryCode + formattedNumber
         }
         return formattedNumber
     }
@@ -596,6 +598,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let randomString:String = String(randomInt)
         return randomString
     }
+    
+//    func getCountryCode(){
+//        let userSettings = UserDefaults()
+//        if let phonenumber = userSettings.string(forKey: "userPhonenumber"){
+//            let first = Array(phonenumber)[0]
+//            let second = Array(phonenumber)[1]
+//            countryCode = "\(first)\(second)"
+//            
+//        }
+//        
+//    }
     
 }
 

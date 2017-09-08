@@ -38,6 +38,7 @@ class FightVC: ViewController {
     let lblDefenderScore = SKLabelNode(text: "Hits: 0")
     let lblResult = SKLabelNode(text: "")
     let rotatePhone = SKSpriteNode(imageNamed: "turnphone.png")
+    let skipNode = SKSpriteNode(imageNamed: "skip.png")
     
     var idleArray = [SKTexture]()
     var startRunningArray = [SKTexture]()
@@ -176,22 +177,85 @@ class FightVC: ViewController {
             startChallenge()
             break
             
-        case .landscapeRight:
-            startChallenge()
-            break
+//        case .landscapeRight:
+//            startChallenge()
+//            break
             
         default:
             showRotatePhone()
             break
-            
+        }
+        
+    }
+    
+    func showCloseButton(){
+        if (scene.childNode(withName: "Skip") != nil) {
+            scene.removeChildren(in: [skipNode])
+        }
+        
+        let closeButton = SKSpriteNode(imageNamed: "close")
+        closeButton.anchorPoint = CGPoint(x: 1, y: 1)
+        closeButton.position = CGPoint(x: scene.frame.width - 5, y: scene.frame.height - 5)
+        closeButton.size = CGSize(width: 100, height: 100)
+        closeButton.zPosition = Layer.Messages
+        closeButton.name = "Close"
+        scene.addChild(closeButton)
+    }
+    
+    func skipAnimation(){
+        pauseChallenge()
+        if (scene.childNode(withName: "Rotate") != nil) {
+            scene.removeChildren(in: [rotatePhone])
+        }
+        for child in scene.children {
+            child.removeAllActions()
+        }
+//        scene.removeAllActions()
+        attackerScore = 0
+        defenderScore = 0
+        
+        if challenge?.attackerMoves?.attack1 != challenge?.defenderMoves?.defence1{
+            attackerScore += 1
+        }
+        if challenge?.attackerMoves?.attack2 != challenge?.defenderMoves?.defence2{
+            attackerScore += 1
+        }
+        if challenge?.attackerMoves?.attack3 != challenge?.defenderMoves?.defence3{
+            attackerScore += 1
+        }
+        if challenge?.defenderMoves?.attack1 != challenge?.attackerMoves?.defence1{
+            defenderScore += 1
+        }
+        if challenge?.defenderMoves?.attack2 != challenge?.attackerMoves?.defence2{
+            defenderScore += 1
+        }
+        if challenge?.defenderMoves?.attack3 != challenge?.attackerMoves?.defence3{
+            defenderScore += 1
+        }
+        lblAttackerScore.text = "Hits: \(attackerScore)"
+        lblDefenderScore.text = "Hits: \(defenderScore)"
+        showResult()
+        showCloseButton()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: scene)
+            let touchedNodes = scene.nodes(at: location)
+            for node in touchedNodes{
+                if node.name == "Close" {
+//                    print("Exit!")
+                    self.performSegue(withIdentifier: "BackToMenu", sender: self)
+                }else if node.name == "Skip"{
+                    skipAnimation()
+                }
+            }
         }
         
     }
     
     func showResult(){
         var resultNode = SKSpriteNode()
-        
-        
         let userSettings = UserDefaults()
         if (userSettings.string(forKey: "userPhonenumber") != nil){
             let userPhonenumber = userSettings.string(forKey: "userPhonenumber")
@@ -219,6 +283,7 @@ class FightVC: ViewController {
                 // Draw
 //                print("Draw")
                 resultNode = tieNode
+                resultNode.name = "Result"
             }
         }
         resultNode.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 2)
@@ -232,6 +297,7 @@ class FightVC: ViewController {
             rotatePhone.size = CGSize(width: 400, height: 400)
             rotatePhone.zRotation = CGFloat(Double.pi / 2)
             rotatePhone.zPosition = Layer.Messages
+            rotatePhone.name = "Rotate"
             scene.addChild(rotatePhone)
         }
     }
@@ -259,8 +325,8 @@ class FightVC: ViewController {
             
         case .landscapeRight:
 //            print("LandscapeRight")
-            startChallenge()
-            scene.removeChildren(in: [rotatePhone])
+            pauseChallenge()
+            showRotatePhone()
             break
 
         default:
@@ -382,8 +448,14 @@ class FightVC: ViewController {
     
     func showChallenge(){
         unpauseChallenge()
+        skipNode.anchorPoint = CGPoint(x: 1, y: 0)
+        skipNode.position = CGPoint(x: scene.frame.width - 5, y: 0 + 5)
+        skipNode.zPosition = Layer.UI
+        skipNode.size = CGSize(width: 100, height: 100)
+        skipNode.name = "Skip"
+        scene.addChild(skipNode)
         let waitRound = SKAction.wait(forDuration: 3.8)
-        let waitToSeque = SKAction.wait(forDuration: 3)
+//        let waitToSeque = SKAction.wait(forDuration: 1)
         scene.addChild(challengeControllerNode)
 //        showRound(attack: (challenge?.attackerMoves?.attack1)!, defence: (challenge?.defenderMoves?.attack1)!, reverse: false)
         let showFightSequence = SKAction.sequence([
@@ -413,11 +485,13 @@ class FightVC: ViewController {
             waitRound,
             SKAction.run {
                 self.showResult()
+                self.showCloseButton()
             },
-            waitToSeque,
-            SKAction.run {
-                self.performSegue(withIdentifier: "BackToMenu", sender: self)
-            },
+//            waitToSeque,
+//            SKAction.run {
+//                self.performSegue(withIdentifier: "BackToMenu", sender: self)
+//                
+//            },
             
             ])
         self.challengeControllerNode.run(showFightSequence)
@@ -434,7 +508,7 @@ class FightVC: ViewController {
         let repeatIdle = SKAction.repeatForever(idleAction)
         attackerNode.run(repeatIdle, withKey: "attackerIdle")
         defenderNode.run(repeatIdle, withKey: "defenderIdle")
-
+        
         var attackAction = SKAction()
         var attackResetAction = SKAction()
         var defenceAction = SKAction()
@@ -592,6 +666,7 @@ class FightVC: ViewController {
             
                 self.defenderNode.run(defenderSequence)
                 self.attackerNode.run(attackerSequence)
+            
         }
             
             
