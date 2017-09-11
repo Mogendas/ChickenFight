@@ -243,6 +243,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func updateContactsArray(){
         contacts.removeAll()
+        let userSettings = UserDefaults()
+        var userPhonenumber = ""
+        if (userSettings.string(forKey: "userPhonenumber") != nil){
+            userPhonenumber = userSettings.string(forKey: "userPhonenumber")!
+        }
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { (isGranted, error) in
             let keys = [CNContactPhoneNumbersKey, CNContactFamilyNameKey, CNContactGivenNameKey]
@@ -261,9 +266,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //                        print(phoneNumber.value.stringValue)
     //                    }
     //                    print("Phonenumber:\(phone)")
-                        let newNumber = self.formatNumber(number: phoneNumber.value.stringValue)
-                        phoneNumbers.append(newNumber)
-                        
+                        let newNumber: String = self.formatNumber(number: phoneNumber.value.stringValue)
+                        if userPhonenumber != newNumber {
+                            phoneNumbers.append(newNumber)
+                        }
                     }
                     
                     let newContact = GameContact(name: name, phoneNumbers: phoneNumbers)
