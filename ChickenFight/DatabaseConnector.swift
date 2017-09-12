@@ -207,7 +207,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
         if jsonResult.count != 0 {
             var challengesList = [Challenge]()
             for game in jsonResult {
-                if let gameID = game["game_id"] as? String, let attacker = game["attacker"] as? String, let defender = game["defender"] as? String {
+                if let gameID = game["game_id"] as? String, let attacker = game["attacker"] as? String, let defender = game["defender"] as? String, let watched = game["watched"] as? String {
                     
                     let challenge = Challenge()
                     challenge.challengeID = Int(gameID)!
@@ -228,6 +228,11 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                         if defMoves != ""{
                             challenge.defenderMoves = Moves(moves: defMoves)
                         }
+                    }
+                    if watched == "0" {
+                        challenge.watched = false
+                    }else{
+                        challenge.watched = true
                     }
                     
                     challengesList.append(challenge)

@@ -14,6 +14,7 @@ class Challenge {
     var defender: String?
     var attackerMoves: Moves?
     var defenderMoves: Moves?
+    var watched: Bool?
     
     init(){
         

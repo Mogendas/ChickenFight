@@ -271,7 +271,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                             phoneNumbers.append(newNumber)
                         }
                     }
-                    
                     let newContact = GameContact(name: name, phoneNumbers: phoneNumbers)
                     self.contacts.append(newContact)
                 }
@@ -454,7 +453,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //            cell.textLabel?.text = list[indexPath.row]
             cell.selectionStyle = .none
             if indexPath.section == 0{
-                var name = challengesList[indexPath.row].attacker
+                var name = "+\(challengesList[indexPath.row].attacker!)"
                 for friend in friendsList {
                     if friend.phoneNumbers[0] == challengesList[indexPath.row].attacker{
                         name = friend.name
@@ -463,7 +462,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cell.textLabel?.text = name
             }
             if indexPath.section == 1 {
-                var name = waitingList[indexPath.row].defender
+                var name = "+\(waitingList[indexPath.row].defender!)"
                 for friend in friendsList {
                     if friend.phoneNumbers[0] == waitingList[indexPath.row].defender{
                         name = friend.name
@@ -478,14 +477,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let userSettings = UserDefaults()
                 if let userPhonenumber = userSettings.string(forKey: "userPhonenumber") {
                     if userPhonenumber == doneList[indexPath.row].attacker {
-                        name = doneList[indexPath.row].defender!
+                        name = "+\(doneList[indexPath.row].defender!)"
                         for friend in friendsList {
                             if friend.phoneNumbers[0] == doneList[indexPath.row].defender {
                                 name = friend.name
                             }
                         }
                     }else{
-                        name = doneList[indexPath.row].attacker!
+                        name = "+\(doneList[indexPath.row].attacker!)"
                         for friend in friendsList {
                             if friend.phoneNumbers[0] == doneList[indexPath.row].attacker {
                                 name = friend.name
@@ -573,7 +572,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if userPhonenumber == useChallenge?.attacker {
                         // You are attacking
                         for friend in friendsList {
-                            if friend.phoneNumbers[0] == useChallenge?.defender{
+                            if friend.phoneNumbers[0] == useChallenge?.defender {
                                 useChallenge?.defender = friend.name
                             }
                         }
