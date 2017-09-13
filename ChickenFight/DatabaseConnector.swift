@@ -72,6 +72,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                             DispatchQueue.main.async {
                                 self.delegate.refresh()
                             }
+                            
                         }
                     }
                 }

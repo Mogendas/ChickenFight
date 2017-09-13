@@ -29,12 +29,28 @@
                                 <color key="separatorColor" red="0.26343043630000001" green="0.64718569199999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="KoG-2c-1j7">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="zX1-HY-FSA" detailTextLabel="PUS-fR-evA" style="IBUITableViewCellStyleValue1" id="KoG-2c-1j7">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KoG-2c-1j7" id="rUn-zz-9QT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zX1-HY-FSA">
+                                                    <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PUS-fR-evA">
+                                                    <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" red="0.26598547700000003" green="0.64720392339999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.26343043630000001" green="0.64718569199999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -317,18 +333,18 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="cKI-WE-snz" userLabel="Buttons">
-                                                <rect key="frame" x="59.5" y="318" width="168" height="30"/>
+                                                <rect key="frame" x="55.5" y="318" width="176" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNZ-3t-cvh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="69" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
                                                         <state key="normal" title="Cancel"/>
                                                         <connections>
                                                             <action selector="btnCancelChallenge:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fIN-B0-s3I"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRj-jk-bU0">
-                                                        <rect key="frame" x="99" y="0.0" width="69" height="30"/>
-                                                        <state key="normal" title="Challenge"/>
+                                                        <rect key="frame" x="103" y="0.0" width="73" height="30"/>
+                                                        <state key="normal" title="Blajblajblaj"/>
                                                         <connections>
                                                             <action selector="btnCreateNewChallenge:" destination="BYZ-38-t0r" eventType="touchUpInside" id="87F-cs-HSM"/>
                                                         </connections>
