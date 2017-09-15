@@ -124,18 +124,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        dbConnector.updateGames()
     }
     
-    
     func applicationWillEnterForeground(_ notification: NSNotification) {
-        print("applicationWillEnterForeground")
         let userSettings = UserDefaults()
         if (userSettings.string(forKey: "userPhonenumber") != nil){
-            print("applicationWillEnterForeground-Refresh")
             refresh()
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("Appear")
         let userSettings = UserDefaults()
         if (userSettings.string(forKey: "userPhonenumber") == nil){
             startPhonenumberRegistration()
@@ -165,14 +161,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func refresh() {
-        print("Refresh")
-            updateContactsArray()
-            dbConnector.getStats()
+        updateContactsArray()
+        dbConnector.getStats()
     }
-    
-//    func startRefresh(){
-//        refreshControl.beginRefreshing()
-//    }
     
     func endRefresh(){
         self.refreshControl.endRefreshing()
@@ -192,12 +183,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
-
     @IBAction func btnCancelChallenge(_ sender: UIButton) {
             newChallengeView.isHidden = true
             resetMovesInNewChallengeView()
             useChallenge = nil
     }
+    
     @IBAction func btnContactsViewCancel(_ sender: UIButton) {
         contactView.isHidden = true
     }
@@ -244,7 +235,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func btnNewCallenge(_ sender: UIButton) {
-//        endRefresh()
         let userSettings = UserDefaults()
         if (userSettings.string(forKey: "userPhonenumber") == nil){
             let alert = UIAlertController(title: "You need to register", message: "You need to register to challenge someone", preferredStyle: .alert)
@@ -332,7 +322,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         }
-        endRefresh()
         contactsTableView.reloadData()
         dbConnector.getChallenges()
     }
@@ -399,7 +388,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Update stats in ui
         numberOfGAmesPlayed.text = games
         numberOfGamesWon.text = gamesWon
-        endRefresh()
     }
     
     func checkWinnerAndUpdateDB(challenge: Challenge){
