@@ -14,7 +14,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var btnNewChallenge: UIButton!
     
-//    let list: [String] = ["One", "Two", "three"]
     var challengesList = [Challenge]()
     var waitingList = [Challenge]()
     var doneList = [Challenge]()
@@ -27,7 +26,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let apiConnector = ApiConnector()
     var contacts = [GameContact]()
     var friendsList = [GameContact]()
-//    var verificationCode: String?
     
     @IBOutlet weak var challengesTableView: UITableView!
     
@@ -63,65 +61,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             selector: #selector(applicationWillEnterForeground(_:)),
             name: NSNotification.Name.UIApplicationWillEnterForeground,
             object: nil)
-//        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         
         challengesTableView.delegate = self
         challengesTableView.dataSource = self
         contactsTableView.delegate = self
         contactsTableView.dataSource = self
-//        contactsTableView.tableHeaderView = nil
         btnNewChallenge.imageView?.contentMode = .scaleAspectFit
         dbConnector.delegate = self
         apiConnector.delegate = self
         contactView.layer.cornerRadius = 15
         newChallengeView.layer.cornerRadius = 15
-//        let numbers = "467654321,461234567,"
-//        dbConnector.checkPhonenumbers(numbersToCheck: numbers)
-//        print("\(formatNumber(number: "073423525432"))")
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), for: UIControlEvents.valueChanged)
         self.challengesTableView.addSubview(refreshControl)
-//        updateContactsArray()
-//        dbConnector.getStats()
-//        let userSettings = UserDefaults()
-//        if (userSettings.string(forKey: "userPhonenumber") != nil){
-//            updateContactsArray()
-//            dbConnector.getStats()
-//        }
-        
-        
-        
-        
-//        dbConnector.newUser(phonenumber: "4493939393")
-//        let random = randomNumber()
-//        print("Random: \(random)")
-//        dbConnector.getChallenges()
-        
-        
-        // Test newChallenge
-//        let opponent = "461234567"
-//        let moves = Moves(moves: "111333")
-//        let challenge = Challenge(opponent: opponent, myMoves: moves)
-//        dbConnector.newChallenge(challenge: challenge)
-        // End test newChallenge
-        
-        // Test uppdateChallenge
-//        let gameid = 10
-//        let moves = Moves(moves: "333111")
-//        dbConnector.updateChallenge(moves: moves, challengeid: gameid)
-        // End test updateChallenge
-        
-        // Test watched
-//        let gameid = 10
-//        dbConnector.setWatched(challengeid: gameid)
-        // End test wathed
-        
-        // Test sms
-//        sendSmsVerification(phonenumber: "46702666888")
-        //End test sms
-        
-//        dbConnector.updateWins()
-//        dbConnector.updateGames()
     }
     
     func applicationWillEnterForeground(_ notification: NSNotification) {
@@ -153,7 +105,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }))
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             phonenumber = (alert?.textFields![0].text)!
-//            print("Text field: \(String(describing: phonenumber))")
             phonenumber = self.formatNumber(number: phonenumber)
             self.sendSmsVerification(phonenumber: phonenumber)
         }))
@@ -194,8 +145,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func btnCreateNewChallenge(_ sender: UIButton) {
-//        print(scFirstAttack.isSelected)
-//        print(scFirstAttack.selectedSegmentIndex)
+
         if scFirstAttack.selectedSegmentIndex != -1 && scSecondAttack.selectedSegmentIndex != -1 && scThirdAttack.selectedSegmentIndex != -1 && scFirstDefence.selectedSegmentIndex != -1 && scSecondDefence.selectedSegmentIndex != -1 && scThirdDefence.selectedSegmentIndex != -1 {
             let firstAttack: Int = scFirstAttack.selectedSegmentIndex + 1
             let secondAttack: Int = scSecondAttack.selectedSegmentIndex + 1
@@ -245,7 +195,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }))
             self.present(alert, animated: true, completion: nil)
         }else{
-//            contactsTableView.reloadData()
             contactView.isHidden = false
         }
 
@@ -264,18 +213,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let request1 = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
             
             try? store.enumerateContacts(with: request1, usingBlock: { (contact, error) in
-//                print("Name: \(contact.givenName), \(contact.familyName), Phone: ")
-//                self.contacts.append(contact)
                 
                 let name = "\(contact.givenName) \(contact.familyName)"
                 var phoneNumbers = [String]()
                 if contact.phoneNumbers.count != 0 {
                     for phoneNumber in contact.phoneNumbers {
-                        // Whatever you want to do with it
-    //                    if let number = phoneNumber.value as? CNPhoneNumber {
-    //                        print(phoneNumber.value.stringValue)
-    //                    }
-    //                    print("Phonenumber:\(phone)")
+
                         let newNumber: String = self.formatNumber(number: phoneNumber.value.stringValue)
                         if userPhonenumber != newNumber {
                             phoneNumbers.append(newNumber)
@@ -286,14 +229,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 
             })
-//            print("Contacts: \(self.contacts)")
-//            for gc in self.contacts {
-//                print("Name: \(gc.name), First number: \(gc.phoneNumbers[0])")
-//            }
-//            self.contactsTableView.reloadData()
             self.checkForIngameFriends()
         }
-//        print("Contacts: \(self.contacts)")
     }
     
     func checkForIngameFriends(){
@@ -301,10 +238,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for contact in contacts {
             for number in contact.phoneNumbers {
                 numbersToCheck += "\(number),"
-//                print(number)
             }
         }
-//        print("NumbersToCheck: \(numbersToCheck)")
         dbConnector.checkPhonenumbers(numbersToCheck: numbersToCheck)
     }
     
@@ -344,16 +279,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         challengesList.sort(by: {$0.challengeID! > $1.challengeID!})
         waitingList.sort(by: {$0.challengeID! > $1.challengeID!})
         doneList.sort(by: {$0.challengeID! > $1.challengeID!})
-//        for challenge in doneList {
-//            print(challenge.challengeID)
-//        }
+
         endRefresh()
         challengesTableView.reloadData()
     }
     
     func sendSmsVerification(phonenumber: String){
         let verificationCode = randomNumber()
-//        print("Code: \(verificationCode)")
         apiConnector.verifyPhonenumber(phonenumber: phonenumber, vericationCode: verificationCode)
     }
     
@@ -370,8 +302,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }))
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let code = (alert?.textFields![0].text)!
-            //                let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-//            print("Text field: \(String(describing: phonenumber))")
+
             if code == verificatoinCode {
                 let userDefaults = UserDefaults()
                 userDefaults.setValue(phonenumber, forKey: "userPhonenumber")
@@ -462,10 +393,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if tableView == challengesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//            cell.textLabel?.text = list[indexPath.row]
             cell.selectionStyle = .none
             cell.detailTextLabel?.text = ""
             cell.detailTextLabel?.font = cell.detailTextLabel?.font.withSize(-2)
+            
             if indexPath.section == 0{
                 var name = "+\(challengesList[indexPath.row].attacker!)"
                 for friend in friendsList {
@@ -475,6 +406,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 cell.textLabel?.text = name
             }
+            
             if indexPath.section == 1 {
                 var name = "+\(waitingList[indexPath.row].defender!)"
                 for friend in friendsList {
@@ -483,9 +415,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     }
                 }
                 cell.textLabel?.text = name
-                
-//                cell.textLabel?.text = waitingList[indexPath.row].defender
             }
+            
             if indexPath.section == 2 {
                 var name = "Unknown"
                 let userSettings = UserDefaults()
@@ -509,21 +440,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         }
                     }
                 }
-//                print(doneList[indexPath.row].watched)
-                
-                
-                
                 cell.textLabel?.text = name
             }
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
             cell.textLabel?.text = friendsList[indexPath.row].name
-//            print("\(contacts[indexPath.row].name)")
-//            print(contacts.count)
             return cell
         }
-//        return nil
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -548,14 +472,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == contactsTableView{
-//            startChallenge(phonenumber: friendsList[indexPath.row].phoneNumbers[0])
             let newChallengerPhonenumber = friendsList[indexPath.row].phoneNumbers[0]
             let challenge = Challenge()
             challenge.defender = newChallengerPhonenumber
             self.useChallenge = challenge
             
             contactView.isHidden = true
-//            btnChallengeOutlet.titleLabel?.text = "Challenge"
             btnChallengeOutlet.setTitle("Challenge", for: .normal)
             newChallengeView.isHidden = false
         }else{
@@ -563,16 +485,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             if indexPath.section == 0 {
                 let tempChallenge = Challenge(challenge: challengesList[indexPath.row])
                 useChallenge = tempChallenge
-//                for friend in friendsList {
-//                    if friend.phoneNumbers[0] == useChallenge?.attacker {
-//                        useChallenge?.attacker = friend.name
-//                    }
-//                }
                 resetMovesInNewChallengeView()
-//                btnChallengeOutlet.titleLabel?.text = "Fight"
                 btnChallengeOutlet.setTitle("Fight", for: .normal)
                 newChallengeView.isHidden = false
-//              print("Fight")
             }
             if indexPath.section == 2 {
                 let tempChallenge = Challenge(challenge: doneList[indexPath.row])
@@ -582,9 +497,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let userPhonenumber = userSettings.string(forKey: "userPhonenumber")
                     if userPhonenumber == useChallenge?.attacker {
                         // You are attacking
-//                        print("Raw: \(doneList[indexPath.row].defender!)")
+
                         var defenderNumber = "+\(doneList[indexPath.row].defender!)"
-//                        print("Defender: \(defenderNumber)")
+
                         for friend in friendsList {
                             if friend.phoneNumbers[0] == useChallenge?.defender {
                                 defenderNumber = friend.name
@@ -593,8 +508,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         useChallenge?.defender = defenderNumber
                     }else{
                         // You are defending
+                        
                         var attackerNumber = "+\(doneList[indexPath.row].attacker!)"
-//                        print("Attacker: \(attackerNumber)")
+
                         for friend in friendsList {
                             if friend.phoneNumbers[0] == useChallenge?.attacker{
                                 attackerNumber = friend.name
@@ -607,13 +523,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     dbConnector.setWatched(challengeid: (useChallenge?.challengeID)!)
                 }
                 
-//                print("DoneList: \(doneList[indexPath.row].defender!)")
                 performSegue(withIdentifier: "Fight", sender: self)
                 dbConnector.getChallenges()
                 dbConnector.getStats()
                 useChallenge = nil
-                // Show fight
-//                print("Show fight")
             }
             
         }
@@ -622,7 +535,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Fight" {
             let fightScene = segue.destination as? FightVC
-//            let indexPath = self.challengesTableView.indexPathForSelectedRow
             fightScene?.challenge = useChallenge
         }
     }
@@ -633,14 +545,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var formattedNumber = String(number.characters.filter({ "0123456789".characters.contains($0) }))
         var index = formattedNumber.index(formattedNumber.startIndex, offsetBy: 2)
         var startOfString = formattedNumber.substring(to: index)
-        //        var start = getFirst(number: formattedNumber, offset: 2)
+        
         if startOfString == "00"{
             formattedNumber = formattedNumber.substring(from: index)
         }
         
         index = formattedNumber.index(formattedNumber.startIndex, offsetBy: 1)
         
-        //        print(range)
         startOfString = formattedNumber.substring(to: index)
         
         if startOfString == "0"{
@@ -655,17 +566,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let randomString:String = String(randomInt)
         return randomString
     }
-    
-//    func getCountryCode(){
-//        let userSettings = UserDefaults()
-//        if let phonenumber = userSettings.string(forKey: "userPhonenumber"){
-//            let first = Array(phonenumber)[0]
-//            let second = Array(phonenumber)[1]
-//            countryCode = "\(first)\(second)"
-//            
-//        }
-//        
-//    }
-    
 }
 

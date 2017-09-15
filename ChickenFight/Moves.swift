@@ -28,32 +28,7 @@ class Moves {
     func getMovesAsString()-> String{
         let moves = "\(attack1)\(attack2)\(attack3)\(defence1)\(defence2)\(defence3)"
         return moves
-    }
-    
-//    func getFirstAttack() -> Int {
-//        return attack1
-//    }
-//    
-//    func getSecondAttack() -> Int {
-//        return attack2
-//    }
-//    
-//    func getThirdAttack() -> Int {
-//        return attack3
-//    }
-//    
-//    func getFirstDefence() -> Int {
-//        return defence1
-//    }
-//    
-//    func getSecondDefence() -> Int {
-//        return defence2
-//    }
-//    
-//    func getThirdDefence() -> Int {
-//        return defence3
-//    }
-    
+    }    
 }
 
 extension String {

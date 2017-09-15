@@ -16,8 +16,6 @@ class ApiConnector {
     
     weak var delegate: ApiConnectorProtocol!
     
-//    let url = "https://www.textmagic.com/app/api?username=johanwejdenstolpe&password=x45Y21C4Fx&cmd=send&text=test+message&phone=46704672965&unicode=0"
-    
     func verifyPhonenumber(phonenumber: String, vericationCode: String){
  
         var urlString = "https://www.textmagic.com/app/api?username=johanwejdenstolpe&password=x45Y21C4Fx&cmd=send&text="
@@ -36,12 +34,6 @@ class ApiConnector {
                 print("Error: \(String(describing: error))")
             }
             
-            if data != nil {
-//                self.parseStationData(data!)
-            }else{
-//                self.delegate?.downloadError(error: "Kunde inte ladda ner stationer")
-            }
-            
             if let httpResponse = response as? HTTPURLResponse {
                 
                 switch httpResponse.statusCode {
@@ -51,15 +43,7 @@ class ApiConnector {
                         self.delegate.smsVerificationSent(phonenumber: phonenumber, verificatoinCode: vericationCode)
                     }
                     break
-                case 400:
-//                    self.delegate?.downloadError(error: "Dålig förfrågan")
-                    break
-                case 404:
-//                    self.delegate?.downloadError(error: "Kunde inte hitta sidan")
-                    break
-                case 500:
-//                    self.delegate?.downloadError(error: "Internt fel på webbservern")
-                    break
+                    
                 default:
                     break
                 }

@@ -36,7 +36,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     
     func newUser(phonenumber: String) {
         let url: URL = URL(string: newUserUrlPath)!
-//        let phonenumber = loadPhonenumber()
         let request = NSMutableURLRequest(url: url)
         
         request.httpMethod = "POST"
@@ -67,7 +66,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     if let status = jsonResult["status"] as? String, let message = jsonResult["message"] as? String{
                         
                         if status == "Success"{
-                            //                            self.delegate.showAlert(textMessage: message)
                             print("Status: \(message)")
                             DispatchQueue.main.async {
                                 self.delegate.refresh()
@@ -84,8 +82,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     func checkPhonenumbers(numbersToCheck: String){
         let url: URL = URL(string: urlPath)!
         let phonenumber = loadPhonenumber()
-//        let searchnumbers = "46704672965,461234567"
-//        let searchnumbers = numbersToCheck
 
         let request = NSMutableURLRequest(url: url)
         
@@ -93,11 +89,9 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
         var postParameters = "action=checkphonenumbers"
         postParameters += "&phonenumber=" + phonenumber
         postParameters += "&numberstosearchfor=" + numbersToCheck
-//        print(postParameters)
+
         request.httpBody = postParameters.data(using: .utf8)
-        
-//        let dataString = String(describing: NSString(data: request.httpBody!, encoding: String.Encoding.utf8.rawValue))
-//        print("\(dataString)")
+
         
         let task = URLSession.shared.dataTask(with: request as URLRequest){
             data, response, error in
@@ -108,9 +102,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             }
             
             if data != nil {
-//                print("Data:")
-//                let dataString = String(describing: NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
-//                print("\(dataString)")
                 self.parsePhonenumbersJSON(data!)
             }
             
@@ -119,7 +110,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     }
     
     func parsePhonenumbersJSON(_ data: Data){
-//        print("Parse:")
+
         var jsonResult: [[String: Any]] = [[String: Any]]()
     
         
@@ -128,14 +119,11 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             try jsonResult = JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! [[String: Any]]
             
         } catch let error as NSError {
-//            print("ERROR:")
+
             print("Error: \(error)")
         }
-        
-//        print(jsonResult)
+
         var phoneNumbers: [String] = [String]()
-//        var jsonElement: [String: Any] = [String: Any]()
-        
         
         if jsonResult.count != 0 {
             for number in jsonResult {
@@ -151,16 +139,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                 self.delegate.endRefresh()
             }
         }
-        
-
-        
-        
-//        for i in (0...jsonResult.count - 1) {
-//            jsonElement = jsonResult[i] as! [String: Any]
-//        }
-//        print("\(phoneNumbers)")
-        
-//            print(numbers)
     }
     
     func getChallenges(){
@@ -183,9 +161,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             }
             
             if data != nil {
-//                                print("Data:")
-//                                let dataString = String(describing: NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
-                //                print("\(dataString)")
                 self.parseChallengesJSON(data!)
             }
             
@@ -201,7 +176,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             try jsonResult = JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! [[String: Any]]
             
         } catch let error as NSError {
-            //            print("ERROR:")
             print("Error: \(error)")
         }
         
@@ -213,23 +187,20 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     let challenge = Challenge()
                     challenge.challengeID = Int(gameID)!
                     challenge.attacker = attacker
-    //                challenge.attackerMoves = Moves(moves: attackerMoves)
                     challenge.defender = defender
-//                    challenge.timestamp = timestamp
                     
                     if let attackMoves = game["attacker_moves"] as? String{
-    //                    print("Attack: \(attackMoves)")
                         if attackMoves != "" {
                             challenge.attackerMoves = Moves(moves: attackMoves)
                         }
                     }
                     
                     if let defMoves = game["defender_moves"] as? String{
-    //                    print("Defence: \(defMoves)")
                         if defMoves != ""{
                             challenge.defenderMoves = Moves(moves: defMoves)
                         }
                     }
+                    
                     if watched == "0" {
                         challenge.watched = false
                     }else{
@@ -237,8 +208,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     }
                     
                     challengesList.append(challenge)
-                    
-    //                print("Game: \(gameID), \(attacker), \(attackerMoves), \(defender), \(defenderMoves)")
                 }
             }
             DispatchQueue.main.async {
@@ -253,14 +222,11 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     
     func newChallenge(challenge: Challenge){
         
-//        if challenge.getMyMovesAsString() != ""{
             let url: URL = URL(string: urlPath)!
             let phonenumber = loadPhonenumber()
             let request = NSMutableURLRequest(url: url)
             let moves = challenge.attackerMoves?.getMovesAsString()
             let opponent = challenge.defender
-            
-//            print("Opponent: \(String(describing: opponent)), moves: \(moves)")
             
             request.httpMethod = "POST"
             var postParameters = "action=newchallenge"
@@ -284,7 +250,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                 }
             }
             task.resume()
-//        }
     }
     
     func updateChallenge(moves: Moves, challengeid: Int){
@@ -340,8 +305,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             
             if data != nil {
                 // Check for success
-//                var stats: [String: Any] = ["Games": 1, "Wins": 2]
-//                self.delegate.updateStats(stats: stats)
                 self.parseStats(data: data!)
             }
         }
@@ -356,13 +319,11 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
             try jsonResult = JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! [[String: Any]]
             
         } catch let error as NSError {
-            //            print("ERROR:")
             print("Error: \(error)")
         }
         
         if jsonResult.count != 0 {
             if let games: String = jsonResult.first?["number_of_games"] as? String, let gamesWon: String = jsonResult.first?["number_of_wins"] as? String {
-    //                let newStats: [String: Any] = [games]
                 DispatchQueue.main.async {
                     self.delegate.updateStats(games: games, gamesWon: gamesWon)
                 }
@@ -372,7 +333,7 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     
     func updateWins(phonenumber: String){
         let url: URL = URL(string: urlPath)!
-//        let phonenumber = loadPhonenumber()
+
         let request = NSMutableURLRequest(url: url)
         
         
@@ -406,7 +367,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     if let status = jsonResult["status"] as? String, let message = jsonResult["message"] as? String{
                         
                         if status == "Success"{
-//                            self.delegate.showAlert(textMessage: message)
                             print("Status: \(message)")
                         }
                     }
@@ -418,9 +378,9 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
     
     func updateGames(phonenumber: String){
         let url: URL = URL(string: urlPath)!
-//        let phonenumber = loadPhonenumber()
+
         let request = NSMutableURLRequest(url: url)
-//        print(phonenumber)
+
         
         request.httpMethod = "POST"
         var postParameters = "action=updategames"
@@ -452,7 +412,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     if let status = jsonResult["status"] as? String, let message = jsonResult["message"] as? String{
                         
                         if status == "Success"{
-//                            self.delegate.showAlert(textMessage: message)
                             print("Status: \(message)")
                         }
                     }
@@ -498,7 +457,6 @@ class DatabaseConnector: NSObject, URLSessionDelegate {
                     if let status = jsonResult["status"] as? String, let message = jsonResult["message"] as? String{
                         
                         if status == "Success"{
-//                            self.delegate.showAlert(textMessage: message)
                             print("Status: \(message)")
                         }
                     }
